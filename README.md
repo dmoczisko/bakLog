@@ -1,9 +1,6 @@
 # bakLog
+
 Add and Track your video game collection and completion status
-
-# vue-project
-
-This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
@@ -53,4 +50,3 @@ npm run test:unit
 ```sh
 npm run lint
 ```
-
