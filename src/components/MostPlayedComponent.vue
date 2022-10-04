@@ -1,8 +1,10 @@
 <template>
   <h2 class="my-5 text-center text-3xl text-red-600">Most Played</h2>
-  <div class="grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 my-5 px-16">
+  <div
+    class="grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 my-5 px-16 flex flex-col"
+  >
     <div
-      class="bg-white overflow-hidden hover:bg-green-100 border border-gray-200 p-3"
+      class="bg-white overflow-hidden hover:bg-green-100 border border-gray-200 p-3 flex flex-col m-2 lg:m-0"
       v-for="games in game_details"
       :key="games.title"
     >
@@ -20,7 +22,7 @@
           {{ games.description }}
         </p>
       </div>
-      <div class="w-full text-right mt-4">
+      <div class="w-full text-right mt-auto">
         <a class="text-green-400 uppercase font-bold text-sm" href="#"
           >Read More</a
         >
