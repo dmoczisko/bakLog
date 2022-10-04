@@ -1,5 +1,5 @@
 <template>
-  <h2 class="my-5 text-center text-3xl text-red-600">Games List</h2>
+  <h2 class="my-5 text-center text-3xl text-red-600">Most Played</h2>
   <div class="grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 my-5 px-16">
     <div
       class="bg-white overflow-hidden hover:bg-green-100 border border-gray-200 p-3"
