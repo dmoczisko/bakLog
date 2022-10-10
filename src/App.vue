@@ -5,16 +5,22 @@ import GamesList from './components/GamesListComponent.vue';
 import MostPlayed from './components/MostPlayedComponent.vue';
 import Footer from './components/FooterComponent.vue';
 
-//need to move to hidden, gitignored file
-fetch('https://url.com', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
+const clientSecret = import.meta.env.VITE_TWITCH_SECRET;
+const clientId = import.meta.env.VITE_TWITCH_CLIENT_ID;
+
+fetch(
+  `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`,
+
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+    // body: JSON.stringify({
+    //   name: 'User 1'
+    // })
   }
-  // body: JSON.stringify({
-  //   name: 'User 1'
-  // })
-})
+)
   .then((res) => {
     return res.json();
   })
