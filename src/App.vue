@@ -16,9 +16,6 @@ fetch(
     headers: {
       'Content-Type': 'application/json'
     }
-    // body: JSON.stringify({
-    //   name: 'User 1'
-    // })
   }
 )
   .then((res) => {
