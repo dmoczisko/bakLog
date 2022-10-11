@@ -6,7 +6,7 @@
     <div
       class="bg-white overflow-hidden hover:bg-green-100 border border-gray-200 p-3 flex flex-col m-2 lg:m-0"
       v-for="games in gamesList"
-      :key="games.title"
+      :key="games['title']"
     >
       <!-- Future feature to figure out how to pull image from fb or api calls -->
       <!-- <img
@@ -16,11 +16,11 @@
       /> -->
       <div class="m-2 text-sm">
         <div class="flex items-center">
-          <h2 class="font-bold text-lg mb-2">{{ games.title }}</h2>
-          <p class="text-sm ml-auto">{{ games.releaseDate }}</p>
+          <h2 class="font-bold text-lg mb-2">{{ games['title'] }}</h2>
+          <p class="text-sm ml-auto">{{ games['releaseDate'] }}</p>
         </div>
         <p class="text-sm">
-          {{ games.description }}
+          {{ games['description'] }}
         </p>
       </div>
       <div class="w-full text-right mt-auto">
@@ -34,6 +34,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { db } from '@/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 //const currentYear = new Date().getFullYear();
@@ -47,7 +49,7 @@ onMounted(async () => {
   // query firebase games collection
   const querySnapshot = await getDocs(collection(db, 'games'));
   // local array to store games objects
-  let firebaseGames = [];
+  let firebaseGames: Object[] = [];
   // Loop through docs from games query above
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
@@ -67,6 +69,8 @@ onMounted(async () => {
     firebaseGames.push(game);
   });
   // access games ref
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   gamesList.value = firebaseGames;
 });
 </script>
