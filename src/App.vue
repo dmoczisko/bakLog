@@ -5,7 +5,7 @@ import GamesList from './components/GamesListComponent.vue';
 import MostPlayed from './components/MostPlayedComponent.vue';
 import Footer from './components/FooterComponent.vue';
 
-//Need to refactor to work with firebase backend
+//Refactor to implicit grant flow
 const clientSecret = import.meta.env.VITE_TWITCH_SECRET;
 const clientId = import.meta.env.VITE_TWITCH_CLIENT_ID;
 

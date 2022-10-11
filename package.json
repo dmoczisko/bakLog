@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.11",
+    "firebase": "^9.11.0",
     "pinia": "^2.0.21",
     "vue": "^3.2.38",
     "vue-router": "^4.1.5"
