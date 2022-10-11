@@ -81,6 +81,7 @@ import { PlusIcon } from '@heroicons/vue/24/solid';
 import { TrashIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
 
+// Pull from list in firebase
 const games_list = [
   {
     title: 'Super Mario 64',
