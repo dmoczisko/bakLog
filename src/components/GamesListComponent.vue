@@ -19,49 +19,7 @@
               </tr>
             </thead>
             <tbody class="text-gray-600 text-sm font-light">
-              <tr
-                class="border-b border-gray-200 hover:bg-gray-100"
-                v-for="games in games_list"
-                :key="games.title"
-              >
-                <td class="py-3 px-6 text-left whitespace-nowrap">
-                  <div class="flex items-center">
-                    <div class="mr-2"></div>
-                    <span class="font-medium">{{ games.title }}</span>
-                  </div>
-                </td>
-                <td class="py-3 px-6 text-left">
-                  <div class="flex items-center">
-                    <span>{{ games.platforms }}</span>
-                  </div>
-                </td>
-
-                <td class="py-3 px-6 text-center">
-                  <div class="flex items-center justify-center">
-                    {{ games.genre }}
-                  </div>
-                </td>
-
-                <td class="py-3 px-6 text-center">
-                  <span
-                    class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs"
-                    >{{ games.completionStatus }}</span
-                  >
-                </td>
-                <td class="py-3 px-6 text-center">
-                  <div class="flex item-center justify-center">
-                    <PlusIcon
-                      class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110"
-                    />
-                    <EyeIcon
-                      class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110"
-                    />
-                    <TrashIcon
-                      class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110"
-                    />
-                  </div>
-                </td>
-              </tr>
+              <GameComponent v-for="game in games_list" :key="game.title" />
             </tbody>
           </table>
         </div>
@@ -71,19 +29,17 @@
 </template>
 
 <script setup lang="ts">
-// import { ref } from 'vue';
+import { ref } from 'vue';
+import GameComponent from '@/components/Games/GameComponent.vue';
 //const currentYear = new Date().getFullYear();
 
 // Get years since release - refactor later
 // console.log(currentYear - game_details.releaseYear);
 
-import { PlusIcon } from '@heroicons/vue/24/solid';
-import { TrashIcon } from '@heroicons/vue/24/solid';
-import { EyeIcon } from '@heroicons/vue/24/solid';
-
-// Pull from list in firebase
-const games_list = [
+// Pull from list in firebase or api
+const games_list = ref([
   {
+    gameId: 1,
     title: 'Super Mario 64',
     releaseYear: 1996,
     releaseDate: 'June 23, 1996',
@@ -95,6 +51,7 @@ const games_list = [
     completionStatus: 'Pending'
   },
   {
+    gameId: 2,
     title: 'The Legend of Zelda: Ocarina of Time',
     releaseYear: 1998,
     releaseDate: 'Nov 21, 1998',
@@ -106,6 +63,7 @@ const games_list = [
     completionStatus: 'Completed'
   },
   {
+    gameId: 3,
     title: 'GoldeneEye 007',
     releaseYear: 1997,
     releaseDate: 'Aug 23, 1997',
@@ -117,6 +75,7 @@ const games_list = [
     completionStatus: 'Active'
   },
   {
+    gameId: 4,
     title: 'Buck Bumble',
     releaseYear: 1998,
     releaseDate: 'Sep 30, 1998',
@@ -128,6 +87,7 @@ const games_list = [
     completionStatus: 'Completed'
   },
   {
+    gameId: 5,
     title: 'Jet Force Gemini',
     releaseYear: 1999,
     releaseDate: 'Oct 11, 1999',
@@ -139,6 +99,7 @@ const games_list = [
     completionStatus: 'Scheduled'
   },
   {
+    gameId: 6,
     title: 'Beetle Adventure Racing',
     releaseYear: 1999,
     releaseDate: 'Mar 24, 1999',
@@ -148,5 +109,11 @@ const games_list = [
     rating: '72',
     completionStatus: 'Pending'
   }
-];
+]);
 </script>
+
+<style>
+.cursorPointer:hover {
+  cursor: pointer;
+}
+</style>
