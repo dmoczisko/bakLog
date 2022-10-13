@@ -57,13 +57,7 @@ onMounted(async () => {
     // console.log(doc.data().title + ' ' + doc.data().description);
     // set up object for each game
     const game = {
-      title: doc.data().title,
-      releaseYear: doc.data().releaseYear,
-      releaseDate: doc.data().releaseDate,
-      genre: doc.data().genre,
-      platforms: doc.data().platforms,
-      description: doc.data().description,
-      rating: doc.data().rating
+      ...doc.data()
     };
     // push game object to local firebaseGames array
     firebaseGames.push(game);
