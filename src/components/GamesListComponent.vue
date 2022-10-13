@@ -41,7 +41,7 @@ import GameComponent from '@/components/Games/GameComponent.vue';
 // Get years since release - refactor later
 // console.log(currentYear - game_details.releaseYear);
 
-// Pull from list in firebase
+// Pull from list in firebase or api
 const games_list = ref([
   {
     gameId: 1,
@@ -123,3 +123,9 @@ function deleteGame(gameId: number) {
   games_list.value.splice(gameIndex, 1);
 }
 </script>
+
+<style>
+.cursorPointer:hover {
+  cursor: pointer;
+}
+</style>
