@@ -37,7 +37,7 @@ import { ref, onMounted } from 'vue';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { db } from '@/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, onSnapshot } from 'firebase/firestore';
 //const currentYear = new Date().getFullYear();
 
 // Get years since release - refactor later
@@ -46,25 +46,17 @@ import { collection, getDocs } from 'firebase/firestore';
 const gamesList = ref([]);
 
 onMounted(async () => {
-  // query firebase games collection
-  const querySnapshot = await getDocs(collection(db, 'games'));
-  // local array to store games objects
-  let firebaseGames: Object[] = [];
-  // Loop through docs from games query above
-  querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    // console.log(doc.id, ' => ', doc.data());
-    // console.log(doc.data().title + ' ' + doc.data().description);
-    // set up object for each game
-    const game = {
-      ...doc.data()
-    };
-    // push game object to local firebaseGames array
-    firebaseGames.push(game);
+  onSnapshot(collection(db, 'games'), (querySnapshot) => {
+    let firebaseGames: Object[] = [];
+    querySnapshot.forEach((doc) => {
+      const game = {
+        ...doc.data()
+      };
+      firebaseGames.push(game);
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    gamesList.value = firebaseGames;
   });
-  // access games ref
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  gamesList.value = firebaseGames;
 });
 </script>
