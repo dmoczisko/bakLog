@@ -2,8 +2,11 @@
   <header class="bg-orange-400 text-stone-900 text-2xl font-medium px-16 py-6">
     <nav class="flex align-center">
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink class="ml-auto" to="#">
-        <UserIcon class="h-10 w-10" />
+      <RouterLink to="#" class="ml-auto">
+        <UserIcon class="h-10 w-10 mx-2" />
+      </RouterLink>
+      <RouterLink to="#">
+        <ArrowLeftOnRectangleIcon class="h-10 w-10 mx-2" />
       </RouterLink>
     </nav>
   </header>
@@ -11,4 +14,5 @@
 
 <script setup lang="ts">
 import { UserIcon } from '@heroicons/vue/24/solid';
+import { ArrowLeftOnRectangleIcon } from '@heroicons/vue/24/solid';
 </script>
