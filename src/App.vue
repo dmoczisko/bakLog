@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
+import { useStoreAuth } from '@/stores/storeAuth';
+import { onMounted } from 'vue';
 import Header from './components/HeaderComponent.vue';
 import Footer from './components/FooterComponent.vue';
+
+const storeAuth = useStoreAuth();
+
+onMounted(() => {
+  storeAuth.init();
+});
 </script>
 
 <template>

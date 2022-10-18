@@ -98,11 +98,18 @@
 
 <script setup lang="ts">
 import { ref, computed, reactive } from 'vue';
+import { useStoreAuth } from '@/stores/storeAuth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const register = ref(false);
 const formTitle = computed(() => {
   return register.value ? 'Register' : 'Login';
 });
+
+/*
+store
+*/
+const storeAuth = useStoreAuth();
 
 /*
 creds
@@ -122,9 +129,9 @@ const onSubmit = () => {
     alert('Please enter an email and password');
   } else {
     if (register.value) {
-      console.log('register user with creds', credentials);
+      storeAuth.registerUser(credentials);
     } else {
-      console.log('login user', credentials);
+      storeAuth.loginUser(credentials);
     }
   }
 };

@@ -91,8 +91,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import GameComponent from '@/components/Games/GameComponent.vue';
+
+
 
 const searchText = ref('');
 const isSearchTextPresent = computed(() => searchText.value.length > 0);

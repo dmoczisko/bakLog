@@ -5,9 +5,9 @@
       <RouterLink to="#" class="ml-auto">
         <UserIcon class="h-10 w-10 mx-2" />
       </RouterLink>
-      <RouterLink to="#">
+      <button @click="storeAuth.logoutUser()">
         <ArrowLeftOnRectangleIcon class="h-10 w-10 mx-2" />
-      </RouterLink>
+      </button>
     </nav>
   </header>
 </template>
@@ -15,4 +15,10 @@
 <script setup lang="ts">
 import { UserIcon } from '@heroicons/vue/24/solid';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/vue/24/solid';
+import { useStoreAuth } from '@/stores/storeAuth';
+
+/*
+store
+*/
+const storeAuth = useStoreAuth();
 </script>
