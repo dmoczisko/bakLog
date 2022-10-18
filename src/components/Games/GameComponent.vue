@@ -33,7 +33,7 @@
           class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110"
         />
         <TrashIcon
-          @click="deleteGameSelection()"
+          @click.prevent="storeNeedToPlay.deleteGame(game.gameId)"
           class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
         />
       </div>
@@ -45,19 +45,15 @@
 import { PlusIcon } from '@heroicons/vue/24/solid';
 import { TrashIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
+import { useStoreNeedToPlay } from '@/stores/storeNeedToPlay';
 
+const storeNeedToPlay = useStoreNeedToPlay();
 const props = defineProps({
   game: {
     type: Object,
     required: true
   }
 });
-
-const emit = defineEmits(['deleteGameSelection']);
-function deleteGameSelection() {
-  emit('deleteGameSelection', props.game.gameId);
-  console.log(props.game.title + ' Has been deleted');
-}
 </script>
 
 <style scoped>

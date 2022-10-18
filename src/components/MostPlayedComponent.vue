@@ -1,5 +1,5 @@
 <template>
-  <h2 class="my-5 text-center text-3xl text-red-600">Most Played</h2>
+  <h2 class="my-5 text-center text-3xl text-red-600">Back Log</h2>
   <div
     class="grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 my-5 px-16 flex flex-col"
   >
@@ -38,25 +38,24 @@ import { ref, onMounted } from 'vue';
 // @ts-ignore
 import { db } from '@/firebase';
 import { collection, onSnapshot } from 'firebase/firestore';
-//const currentYear = new Date().getFullYear();
-
-// Get years since release - refactor later
-// console.log(currentYear - game_details.releaseYear);
 
 const gamesList = ref([]);
 
 onMounted(async () => {
-  onSnapshot(collection(db, 'games'), (querySnapshot) => {
-    let firebaseGames: Object[] = [];
-    querySnapshot.forEach((doc) => {
-      const game = {
-        ...doc.data()
-      };
-      firebaseGames.push(game);
-    });
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    gamesList.value = firebaseGames;
-  });
+  onSnapshot(
+    collection(db, 'users', 'LFXi1Hcnx6SYjOAWi4L6vkWpDXD2', 'games'),
+    (querySnapshot) => {
+      let firebaseGames: Object[] = [];
+      querySnapshot.forEach((doc) => {
+        const game = {
+          ...doc.data()
+        };
+        firebaseGames.push(game);
+      });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      gamesList.value = firebaseGames;
+    }
+  );
 });
 </script>

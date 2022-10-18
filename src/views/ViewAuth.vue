@@ -114,7 +114,6 @@ const storeAuth = useStoreAuth();
 /*
 creds
 */
-
 const credentials = reactive({
   email: '',
   password: ''
@@ -123,7 +122,6 @@ const credentials = reactive({
 /*
 submit
 */
-
 const onSubmit = () => {
   if (!credentials.email || !credentials.password) {
     alert('Please enter an email and password');

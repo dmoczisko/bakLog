@@ -10,6 +10,7 @@ import { auth } from '@/firebase';
 export const useStoreAuth = defineStore('storeAuth', {
   state: () => {
     return {
+      // need to define this object for ts
       user: {}
     };
   },
@@ -21,8 +22,9 @@ export const useStoreAuth = defineStore('storeAuth', {
           // https://firebase.google.com/docs/reference/js/firebase.User
           this.user.id = user.uid;
           this.user.email = user.email;
+          this.router.push('/games');
         } else {
-          this.user = {};
+          this.router.replace('/auth');
         }
       });
     },
