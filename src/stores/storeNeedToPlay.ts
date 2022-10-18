@@ -87,10 +87,3 @@ export const useStoreNeedToPlay = defineStore('storeNeedToPlay', {
     }
   }
 });
-
-// deleteGame(gameId: number) {
-//     const gameIndex = games_list.value.findIndex(
-//       (entry) => entry.gameId === gameId
-//     );
-//     games_list.value.splice(gameIndex, 1);
-//   }
