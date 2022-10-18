@@ -91,8 +91,8 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useStoreNeedToPlay } from '@/stores/storeNeedToPlay';
 import GameComponent from '@/components/Games/GameComponent.vue';
+import { useStoreNeedToPlay } from '@/stores/storeNeedToPlay';
 
 const storeNeedToPlay = useStoreNeedToPlay();
 const searchText = ref('');

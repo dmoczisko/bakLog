@@ -80,8 +80,10 @@ export const useStoreNeedToPlay = defineStore('storeNeedToPlay', {
     };
   },
   actions: {
-    deleteGame(gameId: number) {
-      console.log('Game to be deleted: ' + gameId);
+    deleteGame(gameIdToDelete: number) {
+      this.needToPlay = this.needToPlay.filter((game) => {
+        return game.gameId != gameIdToDelete;
+      });
     }
   }
 });

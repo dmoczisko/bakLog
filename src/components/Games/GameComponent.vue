@@ -47,13 +47,14 @@ import { TrashIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
 import { useStoreNeedToPlay } from '@/stores/storeNeedToPlay';
 
-const storeNeedToPlay = useStoreNeedToPlay();
 const props = defineProps({
   game: {
     type: Object,
     required: true
   }
 });
+
+const storeNeedToPlay = useStoreNeedToPlay();
 </script>
 
 <style scoped>
