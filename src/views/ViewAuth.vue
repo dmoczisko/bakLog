@@ -6,9 +6,7 @@
     >
       <a @click.prevent="register = false">Login</a>
     </button>
-    <!-- hide for now because we need to authenticate users via email in the store first -->
     <button
-      style="display: none"
       :class="{ 'is-active underline': register }"
       class="text-stone-900 text-2xl font-medium p-1.5 mx-3 rounded"
     >
@@ -41,7 +39,7 @@
             class="bg-gray-200 border rounded text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
           />
         </div>
-        <div class="mt-6 w-full">
+        <div class="mt-6 w-full" v-if="!register">
           <label
             for="pass"
             class="text-sm font-medium leading-none text-gray-800"
@@ -105,10 +103,12 @@ const credentials = reactive({
   password: ''
 });
 
-/*disable Submit until values are entered - need to refactor to only happen on login not register */
-const disabledSubmit = computed(
-  () => !credentials.email || !credentials.password
-);
+/*disable Submit until values are entered - only check for email credentials if on register tab */
+const disabledSubmit = computed(() => {
+  return register.value
+    ? !credentials.email
+    : !credentials.email || !credentials.password;
+});
 
 /*submit*/
 const onSubmit = () => {
