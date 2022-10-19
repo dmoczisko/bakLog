@@ -34,9 +34,11 @@ export const useStoreAuth = defineStore('storeAuth', {
         credentials.email,
         credentials.password
       )
-        // .then((userCredential: any) => {
-        //   const user = userCredential.user;
-        // })
+        .then((userCredential: any) => {
+          // part of firebase9 docs, need to understand this better but ignoring eslint error for now
+          /* eslint-disable @typescript-eslint/no-unused-vars */
+          const user = userCredential.user;
+        })
         .catch((error: any) => {
           console.log('error.message: ', error.message);
         });
