@@ -1,7 +1,7 @@
 <template>
   <header class="bg-orange-400 text-stone-900 text-2xl font-medium px-16 py-6">
     <nav class="flex align-center">
-      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="#">Baklog</RouterLink>
       <div v-if="storeAuth.user.id" class="flex ml-auto">
         <RouterLink to="#" class="ml-auto">
           <UserIcon class="h-10 w-10 mx-2" />
@@ -19,8 +19,6 @@ import { UserIcon } from '@heroicons/vue/24/solid';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/vue/24/solid';
 import { useStoreAuth } from '@/stores/storeAuth';
 
-/*
-store
-*/
+/*store*/
 const storeAuth = useStoreAuth();
 </script>

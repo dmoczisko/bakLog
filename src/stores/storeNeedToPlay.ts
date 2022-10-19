@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-// import { db } from '@/firebase';
+import { useStoreAuth } from '@/stores/storeAuth';
 
 export const useStoreNeedToPlay = defineStore('storeNeedToPlay', {
   state: () => {
@@ -80,6 +80,9 @@ export const useStoreNeedToPlay = defineStore('storeNeedToPlay', {
     };
   },
   actions: {
+    init() {
+      const storeAuth = useStoreAuth();
+    },
     deleteGame(gameIdToDelete: number) {
       this.needToPlay = this.needToPlay.filter((game) => {
         return game.gameId != gameIdToDelete;

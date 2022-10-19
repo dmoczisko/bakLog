@@ -34,16 +34,17 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { db } from '@/firebase';
 import { collection, onSnapshot } from 'firebase/firestore';
+import { useStoreAuth } from '@/stores/storeAuth';
 
 const gamesList = ref([]);
-
+const storeAuth = useStoreAuth();
 onMounted(async () => {
   onSnapshot(
-    collection(db, 'users', 'LFXi1Hcnx6SYjOAWi4L6vkWpDXD2', 'games'),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    collection(db, 'users', storeAuth.user.id, 'games'),
     (querySnapshot) => {
       let firebaseGames: Object[] = [];
       querySnapshot.forEach((doc) => {

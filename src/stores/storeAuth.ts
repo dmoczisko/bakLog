@@ -6,6 +6,7 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 import { auth } from '@/firebase';
+import { useStoreNeedToPlay } from '@/stores/storeNeedToPlay';
 
 export const useStoreAuth = defineStore('storeAuth', {
   state: () => {
@@ -16,15 +17,26 @@ export const useStoreAuth = defineStore('storeAuth', {
   },
   actions: {
     init() {
+      const storeNeedToPlay: any = useStoreNeedToPlay();
       onAuthStateChanged(auth, (user) => {
         if (user) {
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/firebase.User
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           this.user.id = user.uid;
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           this.user.email = user.email;
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           this.router.push('/games');
+          storeNeedToPlay.init();
         } else {
-          this.router.replace('/auth');
+          this.user = {};
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          this.router.replace('/login');
         }
       });
     },
