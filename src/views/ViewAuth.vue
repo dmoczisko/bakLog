@@ -73,8 +73,8 @@
         <div class="mt-6 flex justify-end">
           <button
             role="button"
-            :disabled="disabled"
-            class="focus:ring-2 focus:ring-offset-2 focus:ring-orange-700 text-sm font-semibold text-white focus:outline-none bg-orange-700 border rounded hover:bg-orange-600 p-3"
+            :disabled="disabledSubmit"
+            class="disabled:bg-slate-100 disabled:text-slate-800 disabled:border-slate-200 focus:ring-2 focus:ring-offset-2 focus:ring-orange-700 text-sm font-semibold text-white focus:outline-none bg-orange-700 border rounded hover:bg-orange-600 p-3"
           >
             {{ formTitle }}
           </button>
@@ -103,7 +103,10 @@ const credentials = reactive({
   password: ''
 });
 
-const disabled = computed(() => !credentials.email || !credentials.password);
+/*disable Submit until values are entered */
+const disabledSubmit = computed(
+  () => !credentials.email || !credentials.password
+);
 
 /*submit*/
 const onSubmit = () => {

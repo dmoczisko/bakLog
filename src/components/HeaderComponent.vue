@@ -22,9 +22,4 @@ import { useStoreAuth } from '@/stores/storeAuth';
 
 /*store*/
 const storeAuth = useStoreAuth();
-if (storeAuth.user.id) {
-  console.log(`Users storeAuth ID in HeaderComponent.vue `, storeAuth.user.id);
-} else {
-  console.log('User is logged out, no ID to console log');
-}
 </script>
