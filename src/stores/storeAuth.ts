@@ -11,7 +11,6 @@ import { useStoreNeedToPlay } from '@/stores/storeNeedToPlay';
 export const useStoreAuth = defineStore('storeAuth', {
   state: () => {
     return {
-      // need to define this object for ts
       user: {}
     };
   },
@@ -19,23 +18,12 @@ export const useStoreAuth = defineStore('storeAuth', {
     init() {
       const storeNeedToPlay: any = useStoreNeedToPlay();
       onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          this.user.id = user.uid;
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          this.user.email = user.email;
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
+        if (user && user.uid && user.email) {
+          this.user = { id: user.uid, email: user.email };
           this.router.push('/games');
           storeNeedToPlay.init();
         } else {
           this.user = {};
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           this.router.replace('/login');
         }
       });
