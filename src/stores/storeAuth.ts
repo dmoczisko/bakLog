@@ -34,9 +34,9 @@ export const useStoreAuth = defineStore('storeAuth', {
         credentials.email,
         credentials.password
       )
-        .then((userCredential: any) => {
-          const user = userCredential.user;
-        })
+        // .then((userCredential: any) => {
+        //   const user = userCredential.user;
+        // })
         .catch((error: any) => {
           console.log('error.message: ', error.message);
         });
