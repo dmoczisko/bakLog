@@ -7,11 +7,12 @@ import {
 } from 'firebase/auth';
 import { auth } from '@/firebase';
 import { useStoreNeedToPlay } from '@/stores/storeNeedToPlay';
+import type UserInterface from '@/models/UserModel';
 
 export const useStoreAuth = defineStore('storeAuth', {
   state: () => {
     return {
-      user: {}
+      user: { id: '', email: '' } as UserInterface
     };
   },
   actions: {
@@ -23,7 +24,7 @@ export const useStoreAuth = defineStore('storeAuth', {
           this.router.push('/games');
           storeNeedToPlay.init();
         } else {
-          this.user = {};
+          this.user = { id: '', email: '' };
           this.router.replace('/login');
         }
       });
