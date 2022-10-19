@@ -6,7 +6,9 @@
     >
       <a @click.prevent="register = false">Login</a>
     </button>
+    <!-- hide for now because we need to authenticate users via email in the store first -->
     <button
+      style="display: none"
       :class="{ 'is-active underline': register }"
       class="text-stone-900 text-2xl font-medium p-1.5 mx-3 rounded"
     >
@@ -103,7 +105,7 @@ const credentials = reactive({
   password: ''
 });
 
-/*disable Submit until values are entered */
+/*disable Submit until values are entered - need to refactor to only happen on login not register */
 const disabledSubmit = computed(
   () => !credentials.email || !credentials.password
 );
