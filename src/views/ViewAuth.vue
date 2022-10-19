@@ -99,29 +99,23 @@
 <script setup lang="ts">
 import { ref, computed, reactive } from 'vue';
 import { useStoreAuth } from '@/stores/storeAuth';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+// import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const register = ref(false);
 const formTitle = computed(() => {
   return register.value ? 'Register' : 'Login';
 });
 
-/*
-store
-*/
+/*store*/
 const storeAuth = useStoreAuth();
 
-/*
-creds
-*/
+/*creds*/
 const credentials = reactive({
   email: '',
   password: ''
 });
 
-/*
-submit
-*/
+/*submit*/
 const onSubmit = () => {
   if (!credentials.email || !credentials.password) {
     alert('Please enter an email and password');
