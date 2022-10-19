@@ -79,19 +79,6 @@
           </button>
         </div>
       </form>
-
-      <p
-        tabindex="0"
-        class="focus:outline-none text-sm mt-4 font-medium text-center text-gray-500"
-      >
-        Dont have account?
-        <a
-          href="javascript:void(0)"
-          class="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none text-gray-800 cursor-pointer"
-        >
-          Sign up here</a
-        >
-      </p>
     </div>
   </div>
 </template>
