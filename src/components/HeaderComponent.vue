@@ -3,6 +3,7 @@
     <nav class="flex align-center">
       <RouterLink to="#">Baklog</RouterLink>
       <div v-if="storeAuth.user.id" class="flex ml-auto">
+        <p>Hello {{ storeAuth.user.email }}</p>
         <RouterLink to="#" class="ml-auto">
           <UserIcon class="h-10 w-10 mx-2" />
         </RouterLink>
