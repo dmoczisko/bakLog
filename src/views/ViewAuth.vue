@@ -112,11 +112,13 @@ const disabledSubmit = computed(() => {
 
 /*submit*/
 const onSubmit = () => {
-  if (!credentials.email || !credentials.password) {
-    alert('Please enter an email and password');
+  if (!credentials.email) {
+    alert('Please enter a valid email');
   } else {
     if (register.value) {
-      storeAuth.registerUser(credentials);
+      // storeAuth.registerUser(credentials.email);
+      storeAuth.emailUser(credentials.email);
+      console.log('user has tried to register with email: ', credentials.email);
     } else {
       storeAuth.loginUser(credentials);
     }
