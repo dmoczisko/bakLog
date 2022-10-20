@@ -27,14 +27,11 @@
     <td class="py-3 px-6 text-center">
       <div class="flex item-center justify-center">
         <PlusIcon
+          @click="addGame()"
           class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110"
         />
         <EyeIcon
           class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110"
-        />
-        <TrashIcon
-          @click.prevent="storeNeedToPlay.deleteGame(game.gameId)"
-          class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
         />
       </div>
     </td>
@@ -43,9 +40,7 @@
 
 <script setup lang="ts">
 import { PlusIcon } from '@heroicons/vue/24/solid';
-import { TrashIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
-import { useStoreNeedToPlay } from '@/stores/storeNeedToPlay';
 
 const props = defineProps({
   game: {
@@ -54,7 +49,13 @@ const props = defineProps({
   }
 });
 
-const storeNeedToPlay = useStoreNeedToPlay();
+function addGame() {
+  console.log('add game by title: ', props.game.gameId);
+  console.log(props.game);
+  // Need to find a way to push this props.game object into
+  //MyGamesComponent.vue const myGamesList = ref([]) array
+  // possibly with https://vuejs.org/guide/components/provide-inject.html
+}
 </script>
 
 <style scoped>

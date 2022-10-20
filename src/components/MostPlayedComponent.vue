@@ -33,8 +33,6 @@
 </template>
 
 <script setup lang="ts">
-// Move all this to the store - errors in console here reading property indexOf
-
 import { ref, onMounted } from 'vue';
 import { db } from '@/firebase';
 import { collection, onSnapshot } from 'firebase/firestore';
