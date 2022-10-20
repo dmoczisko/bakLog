@@ -26,10 +26,7 @@
               <MasterGames
                 v-for="game in masterGamesList"
                 :key="game.gameId"
-                :title="game.title"
-                :platforms="game.platforms"
-                :genre="game.genre"
-                :completionStatus="game.completionStatus"
+                v-bind="game"
               />
             </tbody>
           </table>
