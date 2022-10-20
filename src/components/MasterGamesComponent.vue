@@ -28,6 +28,7 @@
     <td class="py-3 px-6 text-center">
       <div class="flex item-center justify-center">
         <PlusIcon
+          @click="addGame()"
           class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
         />
         <EyeIcon
@@ -48,6 +49,10 @@ defineProps(['title', 'platforms', 'genre', 'completionStatus']);
 
 //addGame needs to emit own event to GamesListComponent.vue
 //GLC.vue needs to listen for event
+function addGame() {
+  console.log('Adding game clicked');
+}
+
 //GLC.vue sends props to MyGamesComponent.vue
 // Then update myGamesList
 </script>
