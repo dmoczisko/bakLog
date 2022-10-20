@@ -56,6 +56,7 @@
                       class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110"
                     />
                     <TrashIcon
+                      @click="deleteGame(game.gameId, game.title)"
                       class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
                     />
                   </div>
@@ -100,18 +101,14 @@ const myGamesList = ref([
       'A 3D reimagining of the core premise of The Legend of Zelda: A Link to the Past (1991), Ocarina of Time follows Link, the protagonist, as he picks up a sword and leaves behind his humble origins in order to trek across the land of Hyrule, venture into its treacherous dungeons and travel through time itself to fulfill his destiny as the Hero of Time by defeating his enemy Ganondorf and ridding Hyrule of evil.',
     rating: '92',
     completionStatus: 'Completed'
-  },
-  {
-    gameId: 3,
-    title: 'GoldeneEye 007',
-    releaseYear: 1997,
-    releaseDate: 'Aug 23, 1997',
-    genre: 'Adventure, Shooter',
-    platforms: 'Nintendo 64',
-    description:
-      'GoldenEye 007 is a first-person shooter video game developed by Rare and based on the 1995 James Bond film GoldenEye. It was exclusively released for the Nintendo 64 video game console in August 1997.',
-    rating: '92',
-    completionStatus: 'Active'
   }
 ]);
+
+function deleteGame(gameId: number, gameTitle: string) {
+  console.log('deleted: ', gameTitle);
+  const gameIndex = myGamesList.value.findIndex(
+    (game) => game.gameId === gameId
+  );
+  myGamesList.value.splice(gameIndex, 1);
+}
 </script>
