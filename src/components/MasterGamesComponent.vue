@@ -81,11 +81,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive } from 'vue';
 import { PlusIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
+import type { Game } from '@/models/models';
 
-const masterGamesList = ref([
+// Define as Game Model
+const masterGamesList: Game[] = reactive([
   {
     gameId: 1,
     title: 'Super Mario 64',
@@ -159,6 +161,11 @@ const masterGamesList = ref([
   }
 ]);
 
+//addGame needs to emit own event to GamesListComponent.vue
+//GLC.vue needs to listen for event
+//GLC.vue sends props to MyGamesComponent.vue
+// Then update myGamesList
+
 function addGame(
   gameId: number,
   gameTitle: string,
@@ -166,35 +173,17 @@ function addGame(
   gameGenre: string,
   gameCompletionStatus: string
 ) {
-  interface Game {
-    gameId: number;
-    title: string;
-    releaseYear: number;
-    releaseDate: string;
-    genre: string;
-    platforms: string;
-    description: string;
-    rating: string;
-    completionStatus: string;
-  }
-
   const gameToAdd: Game = {
     gameId: gameId,
     title: gameTitle,
-    releaseYear: 1999,
-    releaseDate: 'Mar 24, 1999',
     genre: gameGenre,
     platforms: gamePlatform,
-    description: gameGenre,
-    rating: '72',
     completionStatus: gameCompletionStatus
   };
 
-  // const gameIndex = masterGamesList.value.findIndex(
-  //   (game) => game.gameId === gameId
-  // );
-  masterGamesList.value.push(gameToAdd);
-  // Need to find a way to push this props.game object into
+  masterGamesList.push(gameToAdd);
+
+  // Need to find a way to push this via emits and props object into
   //MyGamesComponent.vue const myGamesList = ref([]) array
   // possibly with https://vuejs.org/guide/components/provide-inject.html
 }
