@@ -45,13 +45,29 @@ import { PlusIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
 // import type { Game } from '@/models/models';
 
-defineProps(['title', 'platforms', 'genre', 'completionStatus']);
+// can we define this as an object instead and use that? Seems extra verbose to expliclity state each prop
+// defineProps(['title', 'platforms', 'genre', 'completionStatus']);
+const props = defineProps({
+  gameId: Number,
+  title: String,
+  platforms: String,
+  genre: String,
+  completionStatus: String
+});
 
+const emit = defineEmits(['addGame']);
+function addGame() {
+  emit(
+    'addGame',
+    props.gameId,
+    props.title,
+    props.genre,
+    props.platforms,
+    props.completionStatus
+  );
+}
 //addGame needs to emit own event to GamesListComponent.vue
 //GLC.vue needs to listen for event
-function addGame() {
-  console.log('Adding game clicked');
-}
 
 //GLC.vue sends props to MyGamesComponent.vue
 // Then update myGamesList

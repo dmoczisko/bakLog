@@ -24,6 +24,7 @@
             </thead>
             <tbody class="text-gray-600 text-sm font-light">
               <MasterGames
+                @add-game="addGameToCollection"
                 v-for="game in masterGamesList"
                 :key="game.gameId"
                 v-bind="game"
@@ -116,6 +117,23 @@ const masterGamesList: Game[] = reactive([
     completionStatus: 'Pending'
   }
 ]);
+
+function addGameToCollection(
+  gameId: number,
+  title: string,
+  genre: string,
+  platforms: string,
+  completionStatus: string
+) {
+  console.log('Add Game To collection', title);
+  masterGamesList.push({
+    gameId: gameId,
+    title: title,
+    genre: genre,
+    platforms: platforms,
+    completionStatus: completionStatus
+  });
+}
 </script>
 
 <style>
