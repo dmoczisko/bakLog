@@ -1,6 +1,37 @@
 <template>
   <!-- importing my games into games list component -->
-  <MyGames />
+  <h2 class="my-5 text-center text-3xl text-red-600">My Collection</h2>
+  <div class="overflow-x-auto">
+    <div
+      class="flex items-center justify-center font-sans overflow-hidden px-16"
+    >
+      <div class="w-full">
+        <div class="bg-white shadow-md rounded">
+          <table class="min-w-max w-full table-auto">
+            <thead>
+              <tr
+                class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
+              >
+                <th class="py-3 px-6 text-left">Title</th>
+                <th class="py-3 px-6 text-left">Platform(s)</th>
+                <th class="py-3 px-6 text-center">Genre</th>
+                <th class="py-3 px-6 text-center">Status</th>
+                <th class="py-3 px-6 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-600 text-sm font-light">
+              <MyGames
+                @delete-game="deleteGameFromCollection"
+                v-for="userGame in myGamesList"
+                :key="userGame.gameId"
+                v-bind="userGame"
+              />
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- importing my games into games list component -->
 
   <h2 class="my-5 text-center text-3xl text-red-600">Master Games List</h2>
@@ -118,6 +149,9 @@ const masterGamesList: Game[] = reactive([
   }
 ]);
 
+// Come from firebase eventually
+const myGamesList: Game[] = reactive([]);
+
 function addGameToCollection(
   gameId: number,
   title: string,
@@ -125,14 +159,18 @@ function addGameToCollection(
   platforms: string,
   completionStatus: string
 ) {
-  console.log('Add Game To collection', title);
-  masterGamesList.push({
+  myGamesList.push({
     gameId: gameId,
     title: title,
     genre: genre,
     platforms: platforms,
     completionStatus: completionStatus
   });
+}
+
+function deleteGameFromCollection(gameId: number) {
+  const gameIndex = myGamesList.findIndex((game) => game.gameId === gameId);
+  myGamesList.splice(gameIndex, 1);
 }
 </script>
 

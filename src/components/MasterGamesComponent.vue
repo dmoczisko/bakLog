@@ -32,7 +32,7 @@
           class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
         />
         <EyeIcon
-          class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110"
+          class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
         />
       </div>
     </td>
@@ -40,10 +40,8 @@
 </template>
 
 <script setup lang="ts">
-// import { reactive } from 'vue';
 import { PlusIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
-// import type { Game } from '@/models/models';
 
 // can we define this as an object instead and use that? Seems extra verbose to expliclity state each prop
 // defineProps(['title', 'platforms', 'genre', 'completionStatus']);
