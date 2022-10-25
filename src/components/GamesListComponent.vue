@@ -146,6 +146,17 @@ const masterGamesList: Game[] = reactive([
     description: 'Racing Game',
     rating: '72',
     completionStatus: 'Pending'
+  },
+  {
+    gameId: 7,
+    title: "Army Men Sarge's Heroes",
+    releaseYear: 2001,
+    releaseDate: 'Mar 31st, 2001',
+    genre: 'Shooter, Platformer',
+    platforms: 'Nintendo 64',
+    description: 'Army Men Game',
+    rating: '76',
+    completionStatus: 'Complete'
   }
 ]);
 
