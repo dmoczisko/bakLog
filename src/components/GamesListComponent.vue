@@ -3,38 +3,12 @@
   <MyGames @delete-game="deleteGameFromCollection" :myGamesList="myGamesList" />
   <!-- importing my games into games list component -->
 
-  <h2 class="my-5 text-center text-3xl text-red-600">Master Games List</h2>
-  <div class="overflow-x-auto">
-    <div
-      class="flex items-center justify-center font-sans overflow-hidden px-16"
-    >
-      <div class="w-full">
-        <div class="bg-white shadow-md rounded">
-          <table class="min-w-max w-full table-auto">
-            <thead>
-              <tr
-                class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
-              >
-                <th class="py-3 px-6 text-left">Title</th>
-                <th class="py-3 px-6 text-left">Platform(s)</th>
-                <th class="py-3 px-6 text-center">Genre</th>
-                <th class="py-3 px-6 text-center">Status</th>
-                <th class="py-3 px-6 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody class="text-gray-600 text-sm font-light">
-              <MasterGames
-                @add-game="addGameToCollection"
-                v-for="game in masterGamesList"
-                :key="game.gameId"
-                :game="game"
-              />
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- importing master games into games list component -->
+  <MasterGames
+    @add-game="addGameToCollection"
+    :masterGamesList="masterGamesList"
+  />
+  <!-- importing master games into games list component -->
 </template>
 
 <script setup lang="ts">
@@ -133,6 +107,7 @@ const masterGamesList: Game[] = reactive([
 const myGamesList: Game[] = reactive([]);
 
 function addGameToCollection(game: Game) {
+  console.log('button clicked add');
   // post game (object) to firebase user games collection
   myGamesList.push(game);
   // on snapshot triggers, do action
