@@ -2,8 +2,8 @@
 import { RouterView } from 'vue-router';
 import { useStoreAuth } from '@/stores/storeAuth';
 import { onMounted } from 'vue';
-import Header from './components/HeaderComponent.vue';
-import Footer from './components/FooterComponent.vue';
+import Header from './components/Layout/HeaderComponent.vue';
+import Footer from './components/Layout/FooterComponent.vue';
 
 const storeAuth = useStoreAuth();
 
