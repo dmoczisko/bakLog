@@ -52,7 +52,7 @@
                 <td class="py-3 px-6 text-center">
                   <div class="flex item-center justify-center">
                     <PlusIcon
-                      @click="addGame()"
+                      @click="addGame(game)"
                       class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
                     />
                     <EyeIcon
@@ -76,15 +76,13 @@ import { PlusIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
 import type { Game } from '@/models/models';
 
-const props = defineProps<{
+defineProps<{
   masterGamesList: Game[];
 }>();
 
 const emit = defineEmits(['addGame']);
-function addGame() {
-  // Need to figure out how to get this to push single game
-  // object into the myGamesList array
-  emit('addGame', props);
+function addGame(game: Game) {
+  emit('addGame', game);
 }
 </script>
 
