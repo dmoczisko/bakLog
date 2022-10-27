@@ -18,6 +18,7 @@ import MasterGames from '@/components/MasterGamesComponent.vue';
 
 import type { Game } from '@/models/models';
 
+// Import from Firebase when ready
 const masterGamesList: Game[] = reactive([
   {
     gameId: 1,
@@ -102,6 +103,15 @@ const masterGamesList: Game[] = reactive([
     completionStatus: 'Complete'
   }
 ]);
+
+// fetch(
+//   'https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=mario'
+// )
+//   .then((response) => response.json())
+//   .then((data) => console.log(data));
+// .then((data) => masterGamesList.push(data));
+
+// const masterGamesList: Game[] = reactive([]);
 
 // Come from firebase eventually
 const myGamesList: Game[] = reactive([]);
