@@ -12,11 +12,29 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, onMounted } from 'vue';
+import { db } from '@/firebase';
+import { collection, getDocs } from 'firebase/firestore';
+
+import type { Game } from '@/models/models';
 import MyGames from '@/components/MyGamesComponent.vue';
 import MasterGames from '@/components/MasterGamesComponent.vue';
 
-import type { Game } from '@/models/models';
+const myGamesList: Game[] = reactive([]);
+
+onMounted(async () => {
+  const querySnapshot = await getDocs(
+    collection(db, 'users/LFXi1Hcnx6SYjOAWi4L6vkWpDXD2/games')
+  );
+  querySnapshot.forEach((doc) => {
+    // Ask BA why I need to explicitly state .gameId why doesn't it know what ...doc.data() has those?
+    const game: Game = {
+      gameId: doc.data().gameId,
+      ...doc.data()
+    };
+    myGamesList.push(game);
+  });
+});
 
 // Import from Firebase when ready
 const masterGamesList: Game[] = reactive([
@@ -114,7 +132,7 @@ const masterGamesList: Game[] = reactive([
 // const masterGamesList: Game[] = reactive([]);
 
 // Come from firebase eventually
-const myGamesList: Game[] = reactive([]);
+// const myGamesList: Game[] = reactive([]);
 
 function addGameToCollection(game: Game) {
   console.log('button clicked add');
