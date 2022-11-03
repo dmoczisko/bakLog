@@ -7,7 +7,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '@/firebase';
 import { useStoreNeedToPlay } from '@/stores/storeNeedToPlay';
-import type UserInterface from '@/models/models';
+import type { UserInterface } from '@/models/models';
 
 export const useStoreAuth = defineStore('storeAuth', {
   state: () => {

@@ -27,7 +27,7 @@ onMounted(async () => {
     collection(db, 'users/LFXi1Hcnx6SYjOAWi4L6vkWpDXD2/games')
   );
   querySnapshot.forEach((doc) => {
-    // Ask BA why I need to explicitly state .gameId why doesn't it know what ...doc.data() has those?
+    // Ask BA why I need to explicitly state .gameId why doesn't it know that ...doc.data() has those?
     const game: Game = {
       gameId: doc.data().gameId,
       ...doc.data()
