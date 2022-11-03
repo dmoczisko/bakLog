@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { reactive, onMounted } from 'vue';
 import { db } from '@/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
 
 import type { Game } from '@/models/models';
 import MyGames from '@/components/MyGamesComponent.vue';
@@ -131,14 +131,16 @@ const masterGamesList: Game[] = reactive([
 
 // const masterGamesList: Game[] = reactive([]);
 
-// Come from firebase eventually
-// const myGamesList: Game[] = reactive([]);
+async function addGameToCollection(game: Game) {
+  console.log('add button clicked');
 
-function addGameToCollection(game: Game) {
-  console.log('button clicked add');
   // post game (object) to firebase user games collection
   myGamesList.push(game);
   // on snapshot triggers, do action
+  await addDoc(
+    collection(db, 'users/LFXi1Hcnx6SYjOAWi4L6vkWpDXD2/games'),
+    game
+  );
 }
 
 function deleteGameFromCollection(gameId: number) {
