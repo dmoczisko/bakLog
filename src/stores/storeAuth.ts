@@ -6,7 +6,6 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 import { auth } from '@/firebase';
-import { useStoreNeedToPlay } from '@/stores/storeNeedToPlay';
 import type { UserInterface } from '@/models/models';
 
 export const useStoreAuth = defineStore('storeAuth', {
@@ -17,12 +16,10 @@ export const useStoreAuth = defineStore('storeAuth', {
   },
   actions: {
     init() {
-      const storeNeedToPlay: any = useStoreNeedToPlay();
       onAuthStateChanged(auth, (user) => {
         if (user && user.uid && user.email) {
           this.user = { id: user.uid, email: user.email };
           this.router.push('/games');
-          storeNeedToPlay.init();
         } else {
           this.user = { id: '', email: '' };
           this.router.replace('/login');

@@ -12,6 +12,7 @@
 </template>
 
 <script setup lang="ts">
+import { useStoreAuth } from '@/stores/storeAuth';
 import { reactive, onMounted } from 'vue';
 import { db } from '@/firebase';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
@@ -20,18 +21,18 @@ import type { Game } from '@/models/models';
 import MyGames from '@/components/MyGamesComponent.vue';
 import MasterGames from '@/components/MasterGamesComponent.vue';
 
+const storeAuth = useStoreAuth();
 const myGamesList: Game[] = reactive([]);
 
 onMounted(async () => {
   const querySnapshot = await getDocs(
-    collection(db, 'users/LFXi1Hcnx6SYjOAWi4L6vkWpDXD2/games')
+    collection(db, `users/${storeAuth.user.id}/games`)
   );
+  // fb idea property on object that corresponds to fb doc id
   querySnapshot.forEach((doc) => {
-    // Ask BA why I need to explicitly state .gameId why doesn't it know that ...doc.data() has those?
-    const game: Game = {
-      gameId: doc.data().gameId,
+    const game = {
       ...doc.data()
-    };
+    } as Game;
     myGamesList.push(game);
   });
 });
@@ -134,15 +135,24 @@ const masterGamesList: Game[] = reactive([
 async function addGameToCollection(game: Game) {
   console.log('add button clicked');
 
-  // post game (object) to firebase user games collection
-  myGamesList.push(game);
-  // on snapshot triggers, do action
-  await addDoc(
-    collection(db, 'users/LFXi1Hcnx6SYjOAWi4L6vkWpDXD2/games'),
-    game
-  );
+  // Check if game already exists in users collection, if does throw error
+  // If not, go ahead and add it to users collection
+  try {
+    const docRef = await addDoc(
+      collection(db, 'users/LFXi1Hcnx6SYjOAWi4L6vkWpDXD2/games'),
+      game
+    );
+    console.log(docRef.id);
+    // Getting firebase doc id and pushing it to the client side object
+    // this lets users delete games immediately after adding if needed
+    // game.firebaseId = docRef.id;
+    myGamesList.push(game);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
+// refactor to delete by firebase ID NOT game id - async with await like adding doc
 function deleteGameFromCollection(gameId: number) {
   const gameIndex = myGamesList.findIndex((game) => game.gameId === gameId);
   myGamesList.splice(gameIndex, 1);
