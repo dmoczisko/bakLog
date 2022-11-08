@@ -10,7 +10,14 @@
 import { useStoreAuth } from '@/stores/storeAuth';
 import { reactive, onMounted } from 'vue';
 import { db } from '@/firebase';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import {
+  doc,
+  collection,
+  getDocs,
+  updateDoc,
+  addDoc,
+  deleteDoc
+} from 'firebase/firestore';
 
 import type { Game } from '@/models/models';
 import MyGames from '@/components/MyGamesComponent.vue';
@@ -23,7 +30,6 @@ onMounted(async () => {
   const querySnapshot = await getDocs(
     collection(db, `users/${storeAuth.user.id}/games`)
   );
-  // fb idea property on object that corresponds to fb doc id
   querySnapshot.forEach((doc) => {
     const game = {
       ...doc.data()
@@ -36,6 +42,7 @@ onMounted(async () => {
 const masterGamesList: Game[] = reactive([
   {
     gameId: 1,
+    gameFbId: '',
     title: 'Super Mario 64',
     releaseYear: 1996,
     releaseDate: 'June 23, 1996',
@@ -48,6 +55,7 @@ const masterGamesList: Game[] = reactive([
   },
   {
     gameId: 2,
+    gameFbId: '',
     title: 'The Legend of Zelda: Ocarina of Time',
     releaseYear: 1998,
     releaseDate: 'Nov 21, 1998',
@@ -60,6 +68,7 @@ const masterGamesList: Game[] = reactive([
   },
   {
     gameId: 3,
+    gameFbId: '',
     title: 'GoldeneEye 007',
     releaseYear: 1997,
     releaseDate: 'Aug 23, 1997',
@@ -72,6 +81,7 @@ const masterGamesList: Game[] = reactive([
   },
   {
     gameId: 4,
+    gameFbId: '',
     title: 'Buck Bumble',
     releaseYear: 1998,
     releaseDate: 'Sep 30, 1998',
@@ -81,68 +91,43 @@ const masterGamesList: Game[] = reactive([
       'A chemical spill somewhere in rural England has mutated an army of bees into killer insects! Led by their queen, they are out to destroy everything living thing on the planet, including all insects that dare stop them. Only Buck Bumble, the only bee not to be turned evil by the ways of the queen, can save the world, and his fellow insects, from total destruction. Shoot down swarms of enemy bees, while flying and avoiding the hazards bellow or land on the ground and attack the enemies on foot with various weapons. Also included are a handful of two-player split-screen modes, including Buzz Ball, a unique soccer style game.',
     rating: '75',
     completionStatus: 'Completed'
-  },
-  {
-    gameId: 5,
-    title: 'Jet Force Gemini',
-    releaseYear: 1999,
-    releaseDate: 'Oct 11, 1999',
-    genre: 'Adventure, Platform, Shooter',
-    platforms: 'Nintendo 64',
-    description:
-      "The insect invasion has begun. The galaxy is being infested by the evil Mizar and his horde of Drones. Already, the planet of Goldwood has been subjugated and the peaceful Tribals enslaved. With an arsenal of mega-weapons at their disposal, the Jet Force Gemini team must travel in search of Mizar's lair - rescuing Tribals and splattering Drones along the way. But can Juno, Vela and their faithful dog, Lupus, exterminate the deadly threat before it's too late?",
-    rating: '89',
-    completionStatus: 'Scheduled'
-  },
-  {
-    gameId: 6,
-    title: 'Beetle Adventure Racing',
-    releaseYear: 1999,
-    releaseDate: 'Mar 24, 1999',
-    genre: 'Racing',
-    platforms: 'Nintendo 64',
-    description: 'Racing Game',
-    rating: '72',
-    completionStatus: 'Pending'
-  },
-  {
-    gameId: 7,
-    title: "Army Men Sarge's Heroes",
-    releaseYear: 2001,
-    releaseDate: 'Mar 31st, 2001',
-    genre: 'Shooter, Platformer',
-    platforms: 'Nintendo 64',
-    description: 'Army Men Game',
-    rating: '76',
-    completionStatus: 'Complete'
   }
 ]);
 
 async function addGameToCollection(game: Game) {
   console.log('add button clicked');
 
-  // Check if game already exists in users collection, if does throw error
+  // Need Check if game already exists in users collection by document id here, if it does, throw error
   // If not, go ahead and add it to users collection
-  // variable for user id - not hard coded
   try {
     const docRef = await addDoc(
       collection(db, `users/${storeAuth.user.id}/games`),
       game
     );
-    console.log(docRef.id);
     // Getting firebase doc id and pushing it to the client side object
     // this lets users delete games immediately after adding if needed
-    // game.firebaseId = docRef.id;
+    game.gameFbId = docRef.id;
+    // then here we need to send the docref id to firebase
+    await updateDoc(docRef, {
+      gameFbId: docRef.id
+    });
     myGamesList.push(game);
   } catch (error) {
     console.log(error);
   }
 }
 
-// refactor to delete by firebase ID NOT game id - async with await like adding doc
-function deleteGameFromCollection(gameId: number) {
-  const gameIndex = myGamesList.findIndex((game) => game.gameId === gameId);
-  myGamesList.splice(gameIndex, 1);
+// Delete game from collection
+async function deleteGameFromCollection(gameFbId: string) {
+  try {
+    await deleteDoc(doc(db, `users/${storeAuth.user.id}/games`, gameFbId));
+    const gameIndex = myGamesList.findIndex(
+      (game) => game.gameFbId === gameFbId
+    );
+    myGamesList.splice(gameIndex, 1);
+  } catch (error) {
+    console.log(error);
+  }
 }
 </script>
 

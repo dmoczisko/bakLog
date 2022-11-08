@@ -4,6 +4,7 @@ interface UserInterface {
 }
 
 interface Game {
+  gameFbId?: string;
   gameId: number;
   title: string;
   genre: string;

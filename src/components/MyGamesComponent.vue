@@ -55,7 +55,7 @@
                       class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
                     />
                     <TrashIcon
-                      @click="deleteGame(game.gameId, game.title)"
+                      @click="deleteGame(game.gameFbId)"
                       class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
                     />
                   </div>
@@ -79,8 +79,8 @@ defineProps<{
 }>();
 
 const emit = defineEmits(['deleteGame']);
-function deleteGame(gameId: any, title: any) {
-  emit('deleteGame', gameId, title);
+function deleteGame(gameFbId: any) {
+  emit('deleteGame', gameFbId);
 }
 </script>
 
