@@ -44,11 +44,17 @@
                 </td>
 
                 <td class="py-3 px-6 text-center">
-                  <span
+                  <select
                     class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs"
-                    >{{ game.completionStatus }}</span
+                    name="completionStatus"
+                    id="completionStatus"
                   >
+                    <option value="pending">Pending</option>
+                    <option value="active">Active</option>
+                    <option value="complete">Complete</option>
+                  </select>
                 </td>
+
                 <td class="py-3 px-6 text-center">
                   <div class="flex item-center justify-center">
                     <EyeIcon
@@ -88,4 +94,9 @@ function deleteGame(gameFbId: any) {
 .cursorPointer:hover {
   cursor: pointer;
 }
+
+/* pending red
+completed green
+in progress = purple
+*/
 </style>
