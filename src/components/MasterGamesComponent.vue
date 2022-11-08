@@ -14,7 +14,6 @@
                 <th class="py-3 px-6 text-left">Title</th>
                 <th class="py-3 px-6 text-left">Platform(s)</th>
                 <th class="py-3 px-6 text-center">Genre</th>
-                <th class="py-3 px-6 text-center">Status</th>
                 <th class="py-3 px-6 text-center">Actions</th>
               </tr>
             </thead>
@@ -43,12 +42,6 @@
                   </div>
                 </td>
 
-                <td class="py-3 px-6 text-center">
-                  <span
-                    class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs"
-                    >{{ game.completionStatus }}</span
-                  >
-                </td>
                 <td class="py-3 px-6 text-center">
                   <div class="flex item-center justify-center">
                     <PlusIcon
