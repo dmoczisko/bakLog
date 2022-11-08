@@ -1,5 +1,9 @@
 <template>
-  <MyGames @delete-game="deleteGameFromCollection" :myGamesList="myGamesList" />
+  <MyGames
+    @delete-game="deleteGameFromCollection"
+    :myGamesList="myGamesList"
+    @select-progress="updateProgressFromCollection"
+  />
   <MasterGames
     @add-game="addGameToCollection"
     :masterGamesList="masterGamesList"
@@ -128,6 +132,17 @@ async function deleteGameFromCollection(gameFbId: string) {
   } catch (error) {
     console.log(error);
   }
+}
+
+// Update Progress field from dropdown on change and push to firebase
+async function updateProgressFromCollection(
+  gameFbId: string,
+  gameCompletionStatus: string
+) {
+  console.log(gameFbId, gameCompletionStatus);
+  await updateDoc(doc(db, `users/${storeAuth.user.id}/games`, gameFbId), {
+    completionStatus: gameCompletionStatus
+  });
 }
 </script>
 

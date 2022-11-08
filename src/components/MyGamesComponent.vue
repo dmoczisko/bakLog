@@ -45,13 +45,19 @@
 
                 <td class="py-3 px-6 text-center">
                   <select
+                    @change="
+                      selectProgress(game.gameFbId, game.completionStatus)
+                    "
+                    v-model="game.completionStatus"
                     class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs"
-                    name="completionStatus"
-                    id="completionStatus"
                   >
-                    <option value="pending">Pending</option>
-                    <option value="active">Active</option>
-                    <option value="complete">Complete</option>
+                    <option
+                      v-for="option in ProgressOptions"
+                      :value="option.value"
+                      :key="option.value"
+                    >
+                      {{ option.value }}
+                    </option>
                   </select>
                 </td>
 
@@ -76,17 +82,29 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { TrashIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
 import type { Game } from '@/models/models';
+
+// Do I need to emit on change event here for array to update based on value?
+const ProgressOptions = ref([
+  { value: 'Pending' },
+  { value: 'Active' },
+  { value: 'Completed' }
+]);
 
 defineProps<{
   myGamesList: Game[];
 }>();
 
-const emit = defineEmits(['deleteGame']);
+const emit = defineEmits(['deleteGame', 'selectProgress']);
 function deleteGame(gameFbId: any) {
   emit('deleteGame', gameFbId);
+}
+
+function selectProgress(gameFbId: any, gameCompletionStatus: string) {
+  emit('selectProgress', gameFbId, gameCompletionStatus);
 }
 </script>
 
