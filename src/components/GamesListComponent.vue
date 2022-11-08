@@ -1,14 +1,9 @@
 <template>
-  <!-- importing my games into games list component -->
   <MyGames @delete-game="deleteGameFromCollection" :myGamesList="myGamesList" />
-  <!-- importing my games into games list component -->
-
-  <!-- importing master games into games list component -->
   <MasterGames
     @add-game="addGameToCollection"
     :masterGamesList="masterGamesList"
   />
-  <!-- importing master games into games list component -->
 </template>
 
 <script setup lang="ts">
@@ -123,23 +118,15 @@ const masterGamesList: Game[] = reactive([
   }
 ]);
 
-// fetch(
-//   'https://www.pricecharting.com/api/products?t=c0b53bce27c1bdab90b1605249e600dc43dfd1d5&q=mario'
-// )
-//   .then((response) => response.json())
-//   .then((data) => console.log(data));
-// .then((data) => masterGamesList.push(data));
-
-// const masterGamesList: Game[] = reactive([]);
-
 async function addGameToCollection(game: Game) {
   console.log('add button clicked');
 
   // Check if game already exists in users collection, if does throw error
   // If not, go ahead and add it to users collection
+  // variable for user id - not hard coded
   try {
     const docRef = await addDoc(
-      collection(db, 'users/LFXi1Hcnx6SYjOAWi4L6vkWpDXD2/games'),
+      collection(db, `users/${storeAuth.user.id}/games`),
       game
     );
     console.log(docRef.id);

@@ -5,7 +5,8 @@ import {
   signOut,
   onAuthStateChanged
 } from 'firebase/auth';
-import { auth } from '@/firebase';
+import { auth, db } from '@/firebase';
+import { doc, setDoc } from 'firebase/firestore';
 import type { UserInterface } from '@/models/models';
 
 export const useStoreAuth = defineStore('storeAuth', {
@@ -26,16 +27,16 @@ export const useStoreAuth = defineStore('storeAuth', {
         }
       });
     },
-    registerUser(credentials: any) {
+    async registerUser(credentials: any) {
       createUserWithEmailAndPassword(
         auth,
         credentials.email,
         credentials.password
       )
         .then((userCredential: any) => {
-          // part of firebase9 docs, need to understand this better but ignoring eslint error for now
-          /* eslint-disable @typescript-eslint/no-unused-vars */
           const user = userCredential.user;
+          // create document with user uid in the users collection, then create document of games within that users document
+          setDoc(doc(db, 'users', user.uid), {});
         })
         .catch((error: any) => {
           console.log('error.message: ', error.message);
