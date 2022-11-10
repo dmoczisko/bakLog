@@ -8,6 +8,8 @@
     @add-game="addGameToCollection"
     :masterGamesList="masterGamesList"
   />
+
+  <button @click="addGameToMaster()"></button>
 </template>
 
 <script setup lang="ts">
@@ -43,58 +45,126 @@ onMounted(async () => {
 });
 
 // Import from Firebase when ready
+async function addGameToMaster() {
+  masterGamesList.forEach(async (game) => {
+    console.log('Adding game: ');
+    try {
+      await addDoc(collection(db, 'mainlist'), game);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+}
+
 const masterGamesList: Game[] = reactive([
   {
-    gameId: 1,
-    gameFbId: '',
-    title: 'Super Mario 64',
-    releaseYear: 1996,
-    releaseDate: 'June 23, 1996',
-    genre: 'Adventure, Platform',
-    platforms: 'Wii U, Wii, Nintendo 64',
-    description:
-      "The first three dimensional entry in the Mario franchise, Super Mario 64 follows Mario as he puts his broadened 3D movement arsenal to use in order to rescue Princess Peach from the clutches of his arch rival Bowser. Mario has to jump into worlds-within-paintings ornamenting the walls of Peach's castle, uncover secrets and hidden challenges and collect golden stars as reward for platforming trials.",
-    rating: '90',
-    completionStatus: 'Pending'
+    Game: '3 Ninjas Kick Back',
+    GameLink: 'https://en.wikipedia.org/wiki/3_Ninjas_Kick_Back_(video_game)',
+    Year: 1994,
+    Dev: 'Malibu Interactive',
+    DevLink: 'https://en.wikipedia.org/wiki/Malibu_Comics',
+    Publisher: 'Sony Imagesoft',
+    PublisherLink: 'https://en.wikipedia.org/wiki/Sony_Imagesoft',
+    Platform: 'the SNES',
+    PlatformLink:
+      'https://en.wikipedia.org/wiki/Super_Nintendo_Entertainment_System'
   },
   {
-    gameId: 2,
-    gameFbId: '',
-    title: 'The Legend of Zelda: Ocarina of Time',
-    releaseYear: 1998,
-    releaseDate: 'Nov 21, 1998',
-    genre: 'Adventure, Platform',
-    platforms: 'Wii U, Wii, Nintendo 64',
-    description:
-      'A 3D reimagining of the core premise of The Legend of Zelda: A Link to the Past (1991), Ocarina of Time follows Link, the protagonist, as he picks up a sword and leaves behind his humble origins in order to trek across the land of Hyrule, venture into its treacherous dungeons and travel through time itself to fulfill his destiny as the Hero of Time by defeating his enemy Ganondorf and ridding Hyrule of evil.',
-    rating: '92',
-    completionStatus: 'Completed'
+    Game: '3rd Super Robot Wars',
+    GameLink: 'https://en.wikipedia.org/wiki/3rd_Super_Robot_Wars',
+    Year: 1993,
+    Dev: 'Banpresto',
+    DevLink: 'https://en.wikipedia.org/wiki/Banpresto',
+    Publisher: 'Banpresto',
+    PublisherLink: null,
+    Platform: 'the SNES',
+    PlatformLink:
+      'https://en.wikipedia.org/wiki/Super_Nintendo_Entertainment_System'
   },
   {
-    gameId: 3,
-    gameFbId: '',
-    title: 'GoldeneEye 007',
-    releaseYear: 1997,
-    releaseDate: 'Aug 23, 1997',
-    genre: 'Adventure, Shooter',
-    platforms: 'Nintendo 64',
-    description:
-      'GoldenEye 007 is a first-person shooter video game developed by Rare and based on the 1995 James Bond film GoldenEye. It was exclusively released for the Nintendo 64 video game console in August 1997.',
-    rating: '92',
-    completionStatus: 'Active'
+    Game: '3×3 Eyes Jūma hōkan',
+    GameLink: 'https://en.wikipedia.org/wiki/3×3_Eyes#Video_games',
+    Year: 1995,
+    Dev: 'System Supply N-Tech',
+    DevLink: null,
+    Publisher: 'Banpresto',
+    PublisherLink: 'https://en.wikipedia.org/wiki/Banpresto',
+    Platform: 'the SNES',
+    PlatformLink:
+      'https://en.wikipedia.org/wiki/Super_Nintendo_Entertainment_System'
   },
   {
-    gameId: 4,
-    gameFbId: '',
-    title: 'Buck Bumble',
-    releaseYear: 1998,
-    releaseDate: 'Sep 30, 1998',
-    genre: 'Shooter',
-    platforms: 'Nintendo 64',
-    description:
-      'A chemical spill somewhere in rural England has mutated an army of bees into killer insects! Led by their queen, they are out to destroy everything living thing on the planet, including all insects that dare stop them. Only Buck Bumble, the only bee not to be turned evil by the ways of the queen, can save the world, and his fellow insects, from total destruction. Shoot down swarms of enemy bees, while flying and avoiding the hazards bellow or land on the ground and attack the enemies on foot with various weapons. Also included are a handful of two-player split-screen modes, including Buzz Ball, a unique soccer style game.',
-    rating: '75',
-    completionStatus: 'Completed'
+    Game: '3×3 Eyes Seima kōrin-den',
+    GameLink: 'https://en.wikipedia.org/wiki/3×3_Eyes#Video_games',
+    Year: 1992,
+    Dev: 'Nova Games',
+    DevLink: null,
+    Publisher: 'Yutaka',
+    PublisherLink: 'https://en.wikipedia.org/wiki/Yutaka_(video_game_company)',
+    Platform: 'the SNES',
+    PlatformLink:
+      'https://en.wikipedia.org/wiki/Super_Nintendo_Entertainment_System'
+  },
+  {
+    Game: '4 Nin Shōgi',
+    GameLink: 'https://en.wikipedia.org/wiki/4_Nin_Shōgi',
+    Year: 1995,
+    Dev: 'Planning Office Wada',
+    DevLink:
+      'https://en.wikipedia.org/w/index.php?title=Planning_Office_Wada&action=edit&redlink=1',
+    Publisher: 'Planning Office Wada',
+    PublisherLink: null,
+    Platform: 'the SNES',
+    PlatformLink:
+      'https://en.wikipedia.org/wiki/Super_Nintendo_Entertainment_System'
+  },
+  {
+    Game: '4th Super Robot Wars',
+    GameLink: 'https://en.wikipedia.org/wiki/4th_Super_Robot_Wars',
+    Year: 1995,
+    Dev: 'Banpresto',
+    DevLink: 'https://en.wikipedia.org/wiki/Banpresto',
+    Publisher: 'Banpresto',
+    PublisherLink: null,
+    Platform: 'the SNES',
+    PlatformLink:
+      'https://en.wikipedia.org/wiki/Super_Nintendo_Entertainment_System'
+  },
+  {
+    Game: 'The 7th Saga - •ElnardJP',
+    GameLink: 'https://en.wikipedia.org/wiki/The_7th_Saga',
+    Year: 1993,
+    Dev: 'Produce',
+    DevLink: 'https://en.wikipedia.org/wiki/Produce_(company)',
+    Publisher: 'Gameplan21 (JP) - Enix (NA)',
+    PublisherLink: null,
+    Platform: 'the SNES',
+    PlatformLink:
+      'https://en.wikipedia.org/wiki/Super_Nintendo_Entertainment_System'
+  },
+  {
+    Game: '90 Minutes European Prime Goal - •J.League Soccer Prime Goal 3JP',
+    GameLink: 'https://en.wikipedia.org/wiki/90_Minutes_European_Prime_Goal',
+    Year: 1995,
+    Dev: 'Namco',
+    DevLink: 'https://en.wikipedia.org/wiki/Namco',
+    Publisher: 'Namco (JP) - Ocean Software (EU)',
+    PublisherLink: 'https://en.wikipedia.org/wiki/Ocean_Software (EU)',
+    Platform: 'the SNES',
+    PlatformLink:
+      'https://en.wikipedia.org/wiki/Super_Nintendo_Entertainment_System'
+  },
+  {
+    Game: 'A.S.P. Air Strike Patrol - •Desert FighterEU - •Desert Fighter: Suna no Arashi SakusenJP',
+    GameLink: 'https://en.wikipedia.org/wiki/A.S.P._Air_Strike_Patrol',
+    Year: 1994,
+    Dev: 'SETA',
+    DevLink: 'https://en.wikipedia.org/wiki/SETA_Corporation',
+    Publisher: 'SETA (JP/NA) - System 3 (EU)',
+    PublisherLink: 'https://en.wikipedia.org/wiki/System_3_(company) (EU)',
+    Platform: 'the SNES',
+    PlatformLink:
+      'https://en.wikipedia.org/wiki/Super_Nintendo_Entertainment_System'
   }
 ]);
 

@@ -114,6 +114,7 @@ function selectProgress(gameFbId: any, gameCompletionStatus: string) {
   cursor: pointer;
 }
 
+/* Need method that takes GCstatus as parameter and returns class based on each status */
 /* Custom tailwind classes for class binding - see if there's a better way to just use tailwind classes conditionally */
 .Pending {
   --tw-bg-opacity: 1;
