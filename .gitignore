@@ -32,4 +32,3 @@ coverage
 *.sw?
 
 *.firebase/
-baklogServiceAccount.json
