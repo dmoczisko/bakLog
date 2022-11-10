@@ -49,14 +49,15 @@
                       selectProgress(game.gameFbId, game.completionStatus)
                     "
                     v-model="game.completionStatus"
-                    class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs"
+                    :class="game.completionStatus"
+                    class="py-1 px-3 rounded-full text-xs"
                   >
                     <option
-                      v-for="option in ProgressOptions"
-                      :value="option.value"
-                      :key="option.value"
+                      v-for="progressOption in ProgressOptions"
+                      :value="progressOption.value"
+                      :key="progressOption.value"
                     >
-                      {{ option.value }}
+                      {{ progressOption.value }}
                     </option>
                   </select>
                 </td>
@@ -89,9 +90,9 @@ import type { Game } from '@/models/models';
 
 // Do I need to emit on change event here for array to update based on value?
 const ProgressOptions = ref([
-  { value: 'Pending' },
-  { value: 'Active' },
-  { value: 'Completed' }
+  { value: 'Pending', class: 'bg-purple-200 text-purple-600' },
+  { value: 'Active', class: 'bg-green-200 text-green-600' },
+  { value: 'Completed', class: 'bg-red-200 text-red-600' }
 ]);
 
 defineProps<{
@@ -113,8 +114,25 @@ function selectProgress(gameFbId: any, gameCompletionStatus: string) {
   cursor: pointer;
 }
 
-/* pending red
-completed green
-in progress = purple
-*/
+/* Custom tailwind classes for class binding - see if there's a better way to just use tailwind classes conditionally */
+.Pending {
+  --tw-bg-opacity: 1;
+  background-color: rgb(233 213 255 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(147 51 234 / var(--tw-text-opacity));
+}
+
+.Completed {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 202 202 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
+.Active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(187 247 208 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(22 163 74 / var(--tw-text-opacity));
+}
 </style>
