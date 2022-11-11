@@ -8,8 +8,6 @@
     @add-game="addGameToCollection"
     :masterGamesList="masterGamesList"
   />
-
-  <button @click="addGameToMaster()">Add to master</button>
 </template>
 
 <script setup lang="ts">
@@ -43,19 +41,32 @@ onMounted(async () => {
     } as Game;
     myGamesList.push(game);
   });
+
+  // Move the master array to a list of queries that only load when the user searches
+  // Can be input box with firebase query
+  const querySnapshotMainList = await getDocs(collection(db, 'mainlist'));
+  querySnapshotMainList.forEach((doc) => {
+    const MasterGame = {
+      ...doc.data()
+    } as MasterGame;
+    masterGamesList.push(MasterGame);
+  });
 });
 
-// Import from Firebase when ready
-async function addGameToMaster() {
-  masterGamesList.forEach(async (MasterGame) => {
-    console.log('Adding game: ');
-    try {
-      await addDoc(collection(db, 'mainlist'), MasterGame);
-    } catch (error) {
-      console.log(error);
-    }
-  });
-}
+// This is a helper function that requires a custom JSON array to be placed in masterGamesList using the MasterGame[] array
+// A button needs to be added to trigger this manually, this is ONLY for importing data into firebase
+
+// <button @click="addGameToMaster()">Add to master</button>
+
+// async function addGameToMaster() {
+//   masterGamesList.forEach(async (MasterGame) => {
+//     try {
+//       await addDoc(collection(db, 'mainlist'), MasterGame);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   });
+// }
 
 // query from Firebase
 const masterGamesList: MasterGame[] = reactive([]);
