@@ -44,13 +44,15 @@ onMounted(async () => {
 
   // Move the master array to a list of queries that only load when the user searches
   // Can be input box with firebase query
-  const querySnapshotMainList = await getDocs(collection(db, 'mainlist'));
-  querySnapshotMainList.forEach((doc) => {
-    const MasterGame = {
-      ...doc.data()
-    } as MasterGame;
-    masterGamesList.push(MasterGame);
-  });
+  // This costs a lot of reads every time a user logs in, need to move this to a search and return functionality
+
+  //   const querySnapshotMainList = await getDocs(collection(db, 'mainlist'));
+  //   querySnapshotMainList.forEach((doc) => {
+  //     const MasterGame = {
+  //       ...doc.data()
+  //     } as MasterGame;
+  //     masterGamesList.push(MasterGame);
+  //   });
 });
 
 // This is a helper function that requires a custom JSON array to be placed in masterGamesList using the MasterGame[] array
