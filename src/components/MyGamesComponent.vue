@@ -21,25 +21,25 @@
             <tbody class="text-gray-600 text-sm font-light">
               <tr
                 v-for="game in myGamesList"
-                :key="game.gameId"
+                :key="game.gameFbId"
                 :game="game"
                 class="border-b border-gray-200 hover:bg-gray-100"
               >
                 <td class="py-3 px-6 text-left whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="mr-2"></div>
-                    <span class="font-medium">{{ game.title }}</span>
+                    <span class="font-medium">{{ game.Game }}</span>
                   </div>
                 </td>
                 <td class="py-3 px-6 text-left">
                   <div class="flex items-center">
-                    <span>{{ game.platforms }}</span>
+                    <span>{{ game.Platform }}</span>
                   </div>
                 </td>
 
                 <td class="py-3 px-6 text-center">
                   <div class="flex items-center justify-center">
-                    {{ game.genre }}
+                    {{ game.Genre }}
                   </div>
                 </td>
 
@@ -90,9 +90,9 @@ import type { Game } from '@/models/models';
 
 // Do I need to emit on change event here for array to update based on value?
 const ProgressOptions = ref([
-  { value: 'Pending', class: 'bg-purple-200 text-purple-600' },
-  { value: 'Active', class: 'bg-green-200 text-green-600' },
-  { value: 'Completed', class: 'bg-red-200 text-red-600' }
+  { value: 'Pending' },
+  { value: 'Active' },
+  { value: 'Completed' }
 ]);
 
 defineProps<{

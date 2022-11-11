@@ -5,11 +5,23 @@ interface UserInterface {
 
 interface Game {
   gameFbId?: string;
-  gameId: number;
-  title: string;
-  genre: string;
-  platforms: string;
+  Game: string;
+  Genre: string;
+  Platform: string;
   completionStatus: string;
 }
 
-export type { UserInterface, Game };
+interface MasterGame {
+  Game: string;
+  GameLink: string;
+  Year: number;
+  Dev: string;
+  DevLink: string;
+  Publisher: string;
+  PublisherLink: string;
+  Platform: string;
+  PlatformLink: string;
+  Genre: string;
+}
+
+export type { UserInterface, Game, MasterGame };
