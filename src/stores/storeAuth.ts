@@ -20,7 +20,7 @@ export const useStoreAuth = defineStore('storeAuth', {
       onAuthStateChanged(auth, (user) => {
         if (user && user.uid && user.email) {
           this.user = { id: user.uid, email: user.email };
-          this.router.push('/games');
+          this.router.push('/my-games');
         } else {
           this.user = { id: '', email: '' };
           this.router.replace('/login');

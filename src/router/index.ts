@@ -10,8 +10,13 @@ const router = createRouter({
       component: ViewAuth
     },
     {
-      path: '/games',
-      name: 'games',
+      path: '/my-games',
+      name: 'my-games',
+      component: ViewGamesList
+    },
+    {
+      path: '/master-collection',
+      name: 'master-collection',
       component: ViewGamesList
     }
   ]

@@ -11,12 +11,15 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, reactive } from 'vue';
+import { useRoute } from 'vue-router';
 import { useStoreAuth } from '@/stores/storeAuth';
-import { reactive, onMounted } from 'vue';
 import { db } from '@/firebase';
 import {
   doc,
   collection,
+  query,
+  where,
   getDocs,
   updateDoc,
   addDoc,
@@ -27,6 +30,14 @@ import type { Game } from '@/models/models';
 import type { MasterGame } from '@/models/models';
 import MyGames from '@/components/MyGamesComponent.vue';
 import MasterGames from '@/components/MasterGamesComponent.vue';
+
+const route = useRoute();
+
+if (route.name === 'my-games') {
+  console.log('MY GAMES ROUTE');
+} else {
+  ('not my games!');
+}
 
 const storeAuth = useStoreAuth();
 const myGamesList: Game[] = reactive([]);
@@ -41,6 +52,18 @@ onMounted(async () => {
     } as Game;
     myGamesList.push(game);
   });
+
+  //  Sample text query firebase example cannot do full text search
+  // const q = query(
+  //   collection(db, 'mainlist'),
+  //   where('Platform', '==', 'Nintendo 64')
+  // );
+
+  // const querySnapshotSearch = await getDocs(q);
+  // querySnapshotSearch.forEach((doc) => {
+  //   // doc.data() is never undefined for query doc snapshots
+  //   console.log(doc.id, ' => ', doc.data());
+  // });
 
   // Move the master array to a list of queries that only load when the user searches
   // Can be input box with firebase query
