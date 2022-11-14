@@ -50,16 +50,20 @@ onMounted(async () => {
   });
 
   //  Sample text query firebase example cannot do full text search
-  // const q = query(
-  //   collection(db, 'mainlist'),
-  //   where('Platform', '==', 'Nintendo 64')
-  // );
+  const q = query(
+    collection(db, 'mainlist'),
+    where('Game', '==', 'The Legend of Zelda: Ocarina of Time')
+  );
 
-  // const querySnapshotSearch = await getDocs(q);
-  // querySnapshotSearch.forEach((doc) => {
-  //   // doc.data() is never undefined for query doc snapshots
-  //   console.log(doc.id, ' => ', doc.data());
-  // });
+  const querySnapshotSearch = await getDocs(q);
+  querySnapshotSearch.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, ' => ', doc.data());
+    const MasterGame = {
+      ...doc.data()
+    } as MasterGame;
+    masterGamesList.push(MasterGame);
+  });
 
   // Move the master array to a list of queries that only load when the user searches
   // Can be input box with firebase query
@@ -94,8 +98,6 @@ const masterGamesList: MasterGame[] = reactive([]);
 // query from Firebase
 
 async function addGameToCollection(game: Game) {
-  console.log('add button clicked');
-
   // Need Check if game already exists in users collection by document id here, if it does, throw error
   // If not, go ahead and add it to users collection
   try {
@@ -104,13 +106,14 @@ async function addGameToCollection(game: Game) {
       game
     );
     // Getting firebase doc id and pushing it to the client side object
-    // this lets users delete games immediately after adding if needed
+    // this lets users delete games immediately after adding, if they need
     game.gameFbId = docRef.id;
     // then here we need to send the docref id to firebase
     await updateDoc(docRef, {
       gameFbId: docRef.id
     });
     myGamesList.push(game);
+    alert(game.Game + 'has been added to your collection');
   } catch (error) {
     console.log(error);
   }
