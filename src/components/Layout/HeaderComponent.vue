@@ -2,6 +2,10 @@
   <header class="bg-orange-400 text-stone-900 text-2xl font-medium px-16 py-6">
     <nav class="flex align-center">
       <RouterLink to="#">Baklog</RouterLink>
+      <RouterLink to="/master-collection" class="ml-5">
+        Find a Game
+      </RouterLink>
+      <RouterLink to="/my-games" class="ml-5">My Collection</RouterLink>
       <div v-if="storeAuth.user.id" class="flex ml-auto">
         <p>Hello {{ storeAuth.user.email }}</p>
         <RouterLink to="#" class="ml-auto">

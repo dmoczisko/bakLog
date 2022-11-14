@@ -1,10 +1,12 @@
 <template>
   <MyGames
+    v-if="route.name === 'my-games'"
     @delete-game="deleteGameFromCollection"
     :myGamesList="myGamesList"
     @select-progress="updateProgressFromCollection"
   />
   <MasterGames
+    v-else-if="route.name === 'master-collection'"
     @add-game="addGameToCollection"
     :masterGamesList="masterGamesList"
   />
@@ -32,12 +34,6 @@ import MyGames from '@/components/MyGamesComponent.vue';
 import MasterGames from '@/components/MasterGamesComponent.vue';
 
 const route = useRoute();
-
-if (route.name === 'my-games') {
-  console.log('MY GAMES ROUTE');
-} else {
-  ('not my games!');
-}
 
 const storeAuth = useStoreAuth();
 const myGamesList: Game[] = reactive([]);
