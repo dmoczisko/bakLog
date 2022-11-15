@@ -1,4 +1,6 @@
 <template>
+  <!-- <button @click="addGameToMaster()">Add to master</button> -->
+
   <MyGames
     v-if="route.name === 'my-games'"
     @delete-game="deleteGameFromCollection"
@@ -52,7 +54,7 @@ onMounted(async () => {
   //  Sample text query firebase example cannot do full text search
   const q = query(
     collection(db, 'mainlist'),
-    where('Game', '==', 'The Legend of Zelda: Ocarina of Time')
+    where('Platform', '==', 'Nintendo Gamecube')
   );
 
   const querySnapshotSearch = await getDocs(q);
