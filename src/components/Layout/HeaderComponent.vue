@@ -20,6 +20,14 @@
           <ArrowLeftOnRectangleIcon class="h-10 w-10 mx-2" />
         </button>
       </div>
+
+      <a
+        href="#"
+        class="ml-auto"
+        v-if="!storeAuth.user.id"
+        @click="googleLogin()"
+        >Google Sign in
+      </a>
     </nav>
   </header>
 </template>
@@ -28,7 +36,12 @@
 import { UserIcon } from '@heroicons/vue/24/solid';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/vue/24/solid';
 import { useStoreAuth } from '@/stores/storeAuth';
+import { auth } from '@/firebase';
 
 /*store*/
 const storeAuth = useStoreAuth();
+
+function googleLogin() {
+  storeAuth.registerUser(auth);
+}
 </script>
