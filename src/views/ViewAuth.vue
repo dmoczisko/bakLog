@@ -1,125 +1,182 @@
 <template>
-  <div class="my-5 text-center content-center text-3xl">
-    <button
-      :class="{ 'is-active underline': !register }"
-      class="text-stone-900 text-2xl font-medium p-1.5 mx-3 rounded"
-    >
-      <a @click.prevent="register = false">Login</a>
-    </button>
-    <button
-      :class="{ 'is-active underline': register }"
-      class="text-stone-900 text-2xl font-medium p-1.5 mx-3 rounded"
-    >
-      <a @click.prevent="register = true">Register</a>
-    </button>
-  </div>
+  <!-- TAILWIND IMPORT -->
 
-  <div class="flex flex-col items-center justify-center">
-    <div class="bg-white shadow rounded lg:w-1/3 md:w-1/2 w-full p-10">
-      <p
-        tabindex="0"
-        class="focus:outline-none text-2xl font-extrabold text-center text-gray-800"
-      >
-        {{ formTitle }}
+  <!--Hero-->
+  <div
+    class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center"
+  >
+    <!--Left Col-->
+    <div
+      class="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left"
+    >
+      <h1 class="my-4 text-5xl font-bold leading-tight text-zinc-100">
+        It's dangerous to go alone, take this!
+      </h1>
+      <p class="leading-normal text-2xl mb-8 text-stone-50">
+        Track your game completion status, all in one place and finally finish
+        that backlog you've been working on!
       </p>
-
-      <form @submit.prevent="onSubmit">
-        <div>
-          <label
-            id="email"
-            class="text-sm font-medium leading-none text-gray-800"
-          >
-            Email
-          </label>
-          <input
-            v-model="credentials.email"
-            aria-labelledby="email"
-            type="email"
-            placeholder="e.g. b.wayne@wayneenterprises.com"
-            class="bg-gray-200 border rounded text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+      <button
+        @click="googleLogin()"
+        role="button"
+        class="mx-auto lg:mx-0 hover:bg-slate-300 bg-slate-200 text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+      >
+        Sign Up with Google
+      </button>
+    </div>
+    <!--Right Col-->
+    <div class="w-full md:w-3/5 py-6 text-center">
+      <img class="w-full md:w-4/5" src="@/assets/svg/videogamenight.svg" />
+    </div>
+  </div>
+  <div class="relative -mt-12 lg:-mt-24">
+    <img src="@/assets/svg/wave-bottom.svg" />
+  </div>
+  <section class="bg-white border-b py-8">
+    <div class="container max-w-5xl mx-auto m-8">
+      <h2
+        class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800"
+      >
+        Backlog Management
+      </h2>
+      <div class="w-full mb-4">
+        <div
+          class="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"
+        ></div>
+      </div>
+      <div class="flex flex-wrap">
+        <div class="w-5/6 sm:w-1/2 p-6">
+          <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">
+            Track progress
+          </h3>
+          <p class="text-gray-600 mb-8">
+            Track your completion progress across games, platforms and genres.
+            Store all completed, pending and currently playing games in one
+            centralized location.
+          </p>
+        </div>
+        <div class="w-full sm:w-1/2 p-6">
+          <img class="w-full sm:h-64 mx-auto" src="@/assets/svg/library.svg" />
+        </div>
+      </div>
+      <div class="flex flex-wrap flex-col-reverse sm:flex-row">
+        <div class="w-full sm:w-1/2 p-6 mt-6">
+          <img
+            class="w-5/6 sm:h-64 mx-auto"
+            src="@/assets/svg/selectplayer.svg"
           />
         </div>
-        <div class="mt-6 w-full">
-          <label
-            for="pass"
-            class="text-sm font-medium leading-none text-gray-800"
+        <div class="w-full sm:w-1/2 p-6 mt-6">
+          <div class="align-middle">
+            <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">
+              Connect with Friends
+            </h3>
+            <p class="text-gray-600 mb-8">
+              See what games your friends are playing, recommend and have
+              completed. Give your friends that extra push to complete that
+              backlog like they've been trying to do for weeks, months, maybe
+              even years.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="bg-gray-100 py-8">
+    <div class="container mx-auto px-2 pt-4 pb-12 text-gray-800">
+      <h2
+        class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800"
+      >
+        Pricing
+      </h2>
+      <h3
+        class="w-full my-2 text-3xl font-bold leading-tight text-center text-gray-800"
+      >
+        Free 99 - And it always will be
+      </h3>
+      <div class="w-full mb-4">
+        <div
+          class="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"
+        ></div>
+      </div>
+      <div class="flex flex-col sm:flex-row justify-center pt-12 my-12 sm:my-4">
+        <div
+          class="flex flex-col w-5/6 lg:w-1/3 mx-auto lg:mx-0 rounded-lg bg-white mt-4 sm:-mt-6 shadow-lg z-10"
+        >
+          <div
+            class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow"
           >
-            Password
-          </label>
-          <div class="relative flex items-center justify-center">
-            <input
-              v-model="credentials.password"
-              id="pass"
-              type="password"
-              placeholder="Enter a password"
-              class="bg-gray-200 border rounded text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
-            />
-            <div class="absolute right-0 mt-2 mr-3 cursor-pointer">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+            <div class="w-full p-8 text-3xl font-bold text-center">
+              Your Backlog, Your Way
+            </div>
+            <div class="h-1 w-full gradient my-0 py-0 rounded-t"></div>
+            <ul class="w-full text-center text-base font-bold">
+              <li class="border-b py-4">
+                Search for games to add to your collection
+              </li>
+              <li class="border-b py-4">Track game completion status</li>
+              <li class="border-b py-4">See what your friends are playing</li>
+            </ul>
+          </div>
+          <div
+            class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6"
+          >
+            <div class="flex items-center justify-center">
+              <button
+                @click="googleLogin()"
+                role="button"
+                class="focus:ring-2 focus:ring-offset-2 focus:ring-orange-700 text-sm font-semibold text-white focus:outline-none bg-red-700 border rounded hover:bg-red-600 p-3 rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
               >
-                <path
-                  d="M7.99978 2C11.5944 2 14.5851 4.58667 15.2124 8C14.5858 11.4133 11.5944 14 7.99978 14C4.40511 14 1.41444 11.4133 0.787109 8C1.41378 4.58667 4.40511 2 7.99978 2ZM7.99978 12.6667C9.35942 12.6664 10.6787 12.2045 11.7417 11.3568C12.8047 10.509 13.5484 9.32552 13.8511 8C13.5473 6.67554 12.8031 5.49334 11.7402 4.64668C10.6773 3.80003 9.35864 3.33902 7.99978 3.33902C6.64091 3.33902 5.32224 3.80003 4.25936 4.64668C3.19648 5.49334 2.45229 6.67554 2.14844 8C2.45117 9.32552 3.19489 10.509 4.25787 11.3568C5.32085 12.2045 6.64013 12.6664 7.99978 12.6667ZM7.99978 11C7.20413 11 6.44106 10.6839 5.87846 10.1213C5.31585 9.55871 4.99978 8.79565 4.99978 8C4.99978 7.20435 5.31585 6.44129 5.87846 5.87868C6.44106 5.31607 7.20413 5 7.99978 5C8.79543 5 9.55849 5.31607 10.1211 5.87868C10.6837 6.44129 10.9998 7.20435 10.9998 8C10.9998 8.79565 10.6837 9.55871 10.1211 10.1213C9.55849 10.6839 8.79543 11 7.99978 11ZM7.99978 9.66667C8.4418 9.66667 8.86573 9.49107 9.17829 9.17851C9.49085 8.86595 9.66644 8.44203 9.66644 8C9.66644 7.55797 9.49085 7.13405 9.17829 6.82149C8.86573 6.50893 8.4418 6.33333 7.99978 6.33333C7.55775 6.33333 7.13383 6.50893 6.82126 6.82149C6.5087 7.13405 6.33311 7.55797 6.33311 8C6.33311 8.44203 6.5087 8.86595 6.82126 9.17851C7.13383 9.49107 7.55775 9.66667 7.99978 9.66667Z"
-                  fill="#71717A"
-                />
-              </svg>
+                Sign Up with Google
+              </button>
             </div>
           </div>
         </div>
-        <div class="mt-6 flex justify-end">
-          <button
-            role="button"
-            :disabled="disabledSubmit"
-            class="disabled:bg-slate-100 disabled:text-slate-800 disabled:border-slate-200 focus:ring-2 focus:ring-offset-2 focus:ring-orange-700 text-sm font-semibold text-white focus:outline-none bg-orange-700 border rounded hover:bg-orange-600 p-3"
-          >
-            {{ formTitle }}
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
-  </div>
+  </section>
+  <!-- Change the colour #f8fafc to match the previous section colour -->
+  <img src="@/assets/svg/wave-top.svg" />
+  <section class="container mx-auto text-center py-6 mb-12">
+    <h2
+      class="w-full my-2 text-5xl font-bold leading-tight text-center text-white"
+    >
+      More features coming soon!
+    </h2>
+    <div class="w-full mb-4">
+      <div
+        class="h-1 mx-auto bg-white w-1/6 opacity-25 my-0 py-0 rounded-t"
+      ></div>
+    </div>
+    <h3 class="my-4 text-3xl leading-tight">
+      If you would like to see a feature added or you find a bug, please let me
+      know!
+    </h3>
+
+    <a
+      href="mailto:danny.moczisko@gmail.com?subject = Backlog Feedback&body = Message"
+    >
+      <button
+        class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+      >
+        Email me
+      </button>
+    </a>
+  </section>
+
+  <!-- TAILWIND TEMPLATE IMPORT -->
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive } from 'vue';
 import { useStoreAuth } from '@/stores/storeAuth';
-// import { createUserWithEmailAndPassword } from 'firebase/auth';
-
-const register = ref(false);
-const formTitle = computed(() => {
-  return register.value ? 'Register' : 'Login';
-});
+import { auth } from '@/firebase';
 
 /*store*/
 const storeAuth = useStoreAuth();
 
-/*creds*/
-const credentials = reactive({
-  email: '',
-  password: ''
-});
-
-/*disable Submit until values are entered */
-const disabledSubmit = computed(
-  () => !credentials.email || !credentials.password
-);
-
-/*submit*/
-const onSubmit = () => {
-  if (!credentials.email || !credentials.password) {
-    alert('Please enter an email and password');
-  } else {
-    if (register.value) {
-      storeAuth.registerUser(credentials);
-    } else {
-      storeAuth.loginUser(credentials);
-    }
-  }
-};
+function googleLogin() {
+  storeAuth.registerUser(auth);
+}
 </script>
 
 <style></style>

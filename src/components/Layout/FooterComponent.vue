@@ -1,7 +1,119 @@
-<script setup lang="ts"></script>
-
 <template>
-  <footer class="bg-slate-900 text-stone-50 px-16 py-8 mt-8 sticky top-[100vh]">
-    <p>Footer Stuff</p>
+  <!--Footer-->
+  <footer class="bg-slate-900 sticky top-[100vh]">
+    <div class="container mx-auto px-8">
+      <div class="w-full flex flex-col md:flex-row py-6">
+        <div class="flex-1 mb-6 text-black">
+          <a
+            class="text-orange-600 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
+            href="#"
+          >
+            <AcademicCapIcon class="h-10 w-10 mx-2 inline" />
+            BAKLOG
+          </a>
+        </div>
+        <div class="flex-1">
+          <p class="uppercase text-gray-300 md:mb-6">Links</p>
+          <ul class="list-reset mb-6">
+            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+              <a
+                href="#"
+                class="no-underline hover:underline text-gray-100 hover:text-pink-500"
+                >FAQ</a
+              >
+            </li>
+            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+              <a
+                href="#"
+                class="no-underline hover:underline text-gray-100 hover:text-pink-500"
+                >Help</a
+              >
+            </li>
+            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+              <a
+                href="#"
+                class="no-underline hover:underline text-gray-100 hover:text-pink-500"
+                >Support</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="flex-1">
+          <p class="uppercase text-gray-300 md:mb-6">Legal</p>
+          <ul class="list-reset mb-6">
+            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+              <a
+                href="#"
+                class="no-underline hover:underline text-gray-100 hover:text-pink-500"
+                >Terms</a
+              >
+            </li>
+            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+              <a
+                href="#"
+                class="no-underline hover:underline text-gray-100 hover:text-pink-500"
+                >Privacy</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="flex-1">
+          <p class="uppercase text-gray-300 md:mb-6">Social</p>
+          <ul class="list-reset mb-6">
+            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+              <a
+                href="#"
+                class="no-underline hover:underline text-gray-100 hover:text-pink-500"
+                >Facebook</a
+              >
+            </li>
+            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+              <a
+                href="#"
+                class="no-underline hover:underline text-gray-100 hover:text-pink-500"
+                >Linkedin</a
+              >
+            </li>
+            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+              <a
+                href="#"
+                class="no-underline hover:underline text-gray-100 hover:text-pink-500"
+                >Twitter</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="flex-1">
+          <p class="uppercase text-gray-300 md:mb-6">Company</p>
+          <ul class="list-reset mb-6">
+            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+              <a
+                href="#"
+                class="no-underline hover:underline text-gray-100 hover:text-pink-500"
+                >Official Blog</a
+              >
+            </li>
+            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+              <a
+                href="#"
+                class="no-underline hover:underline text-gray-100 hover:text-pink-500"
+                >About Us</a
+              >
+            </li>
+            <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+              <a
+                href="#"
+                class="no-underline hover:underline text-gray-100 hover:text-pink-500"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </footer>
 </template>
+
+<script setup lang="ts">
+import { AcademicCapIcon } from '@heroicons/vue/24/solid';
+</script>

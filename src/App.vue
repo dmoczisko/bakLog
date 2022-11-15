@@ -20,4 +20,8 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped></style>
+<style>
+body {
+  background: linear-gradient(90deg, #db36a4 0%, #f7ff00 100%);
+}
+</style>

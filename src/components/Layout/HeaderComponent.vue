@@ -1,11 +1,16 @@
 <template>
-  <header class="bg-orange-400 text-stone-900 text-2xl font-medium px-16 py-6">
+  <header
+    class="w-full bg-slate-900 text-white text-2xl font-medium px-16 py-6 z-50"
+  >
     <nav class="flex align-center">
-      <RouterLink to="#">Baklog</RouterLink>
-      <RouterLink to="/master-collection" class="ml-5">
-        Find a Game
-      </RouterLink>
-      <RouterLink to="/my-games" class="ml-5">My Collection</RouterLink>
+      <RouterLink to="/login">Baklog</RouterLink>
+      <div v-if="storeAuth.user.id">
+        <RouterLink to="/master-collection" class="ml-5">
+          Find a Game
+        </RouterLink>
+        <RouterLink to="/my-games" class="ml-5">My Collection</RouterLink>
+      </div>
+
       <div v-if="storeAuth.user.id" class="flex ml-auto">
         <p>Hello {{ storeAuth.user.email }}</p>
         <RouterLink to="#" class="ml-auto">

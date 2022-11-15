@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia';
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  GoogleAuthProvider
 } from 'firebase/auth';
 import { auth, db } from '@/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import type { UserInterface } from '@/models/models';
+
+const provider = new GoogleAuthProvider();
 
 export const useStoreAuth = defineStore('storeAuth', {
   state: () => {
@@ -27,29 +29,33 @@ export const useStoreAuth = defineStore('storeAuth', {
         }
       });
     },
-    async registerUser(credentials: any) {
-      createUserWithEmailAndPassword(
-        auth,
-        credentials.email,
-        credentials.password
-      )
-        .then((userCredential: any) => {
-          const user = userCredential.user;
-          // create document with user uid in the users collection, then create document of games within that users document
-          setDoc(doc(db, 'users', user.uid), {});
-        })
-        .catch((error: any) => {
-          console.log('error.message: ', error.message);
-        });
-    },
-    loginUser(credentials: any) {
-      signInWithEmailAndPassword(auth, credentials.email, credentials.password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log('Login User: ', user);
+
+    async registerUser(auth: any) {
+      console.log('register user!');
+
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          if (credential) {
+            credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // create document with user uid in the users collection, then create document of games within that users document
+            setDoc(doc(db, 'users', user.uid), {});
+            // ...
+          }
         })
         .catch((error) => {
-          console.log('Login User Error: ', error.message);
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const email = error.customData.email;
+          // The AuthCredential type that was used.
+          const credential = GoogleAuthProvider.credentialFromError(error);
+          console.log(errorCode, errorMessage, email, credential);
+          // ...
         });
     },
     logoutUser() {
