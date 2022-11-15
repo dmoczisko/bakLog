@@ -13,7 +13,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="wrapper min-h-screen">
+  <div
+    class="wrapper min-h-screen"
+    :class="{ 'gradient-custom': $route.path == '/login' }"
+  >
     <Header />
     <RouterView />
     <Footer />
@@ -21,7 +24,7 @@ onMounted(() => {
 </template>
 
 <style>
-body {
+.gradient-custom {
   background: linear-gradient(90deg, #db36a4 0%, #f7ff00 100%);
 }
 </style>

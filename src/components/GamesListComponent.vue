@@ -27,7 +27,8 @@ import {
   getDocs,
   updateDoc,
   addDoc,
-  deleteDoc
+  deleteDoc,
+  limit
 } from 'firebase/firestore';
 
 import type { Game } from '@/models/models';
@@ -54,7 +55,8 @@ onMounted(async () => {
   //  Sample text query firebase example cannot do full text search
   const q = query(
     collection(db, 'mainlist'),
-    where('Platform', '==', 'Nintendo Gamecube')
+    where('Platform', '==', 'Nintendo 64'),
+    limit(30)
   );
 
   const querySnapshotSearch = await getDocs(q);
@@ -71,13 +73,13 @@ onMounted(async () => {
   // Can be input box with firebase query
   // This costs a lot of reads every time a user logs in, need to move this to a search and return functionality
 
-  const querySnapshotMainList = await getDocs(collection(db, 'mainlist'));
-  querySnapshotMainList.forEach((doc) => {
-    const MasterGame = {
-      ...doc.data()
-    } as MasterGame;
-    masterGamesList.push(MasterGame);
-  });
+  // const querySnapshotMainList = await getDocs(collection(db, 'mainlist'));
+  // querySnapshotMainList.forEach((doc) => {
+  //   const MasterGame = {
+  //     ...doc.data()
+  //   } as MasterGame;
+  //   masterGamesList.push(MasterGame);
+  // });
 });
 
 // This is a helper function that requires a custom JSON array to be placed in masterGamesList using the MasterGame[] array
