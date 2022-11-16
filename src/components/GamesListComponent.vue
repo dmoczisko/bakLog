@@ -12,6 +12,10 @@
     @add-game="addGameToCollection"
     :masterGamesList="masterGamesList"
   />
+
+  <div class="flex justify-center">
+    <button @click="pageNext()">Load More</button>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -23,12 +27,13 @@ import {
   doc,
   collection,
   query,
-  where,
+  orderBy,
   getDocs,
   updateDoc,
   addDoc,
   deleteDoc,
-  limit
+  limit,
+  startAfter
 } from 'firebase/firestore';
 
 import type { Game } from '@/models/models';
@@ -41,7 +46,11 @@ const route = useRoute();
 const storeAuth = useStoreAuth();
 const myGamesList: Game[] = reactive([]);
 
+const mainlistRef = collection(db, 'mainlist');
+let lastVisible: any = null;
+
 onMounted(async () => {
+  // Gets user docs for user collection
   const querySnapshot = await getDocs(
     collection(db, `users/${storeAuth.user.id}/games`)
   );
@@ -52,34 +61,27 @@ onMounted(async () => {
     myGamesList.push(game);
   });
 
+  // Gets master collection from firebase
   //  Sample text query firebase example cannot do full text search
   const q = query(
-    collection(db, 'mainlist'),
-    where('Platform', '==', 'Nintendo 64'),
-    limit(30)
+    mainlistRef,
+    orderBy('Game'),
+    limit(15)
+    // Could take first letter or few letters of string and then pass in here as parameter for a search
+    // startAt('T')
   );
 
   const querySnapshotSearch = await getDocs(q);
   querySnapshotSearch.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, ' => ', doc.data());
+    // console.log(doc.id, ' => ', doc.data());
     const MasterGame = {
       ...doc.data()
     } as MasterGame;
     masterGamesList.push(MasterGame);
   });
 
-  // Move the master array to a list of queries that only load when the user searches
-  // Can be input box with firebase query
-  // This costs a lot of reads every time a user logs in, need to move this to a search and return functionality
-
-  // const querySnapshotMainList = await getDocs(collection(db, 'mainlist'));
-  // querySnapshotMainList.forEach((doc) => {
-  //   const MasterGame = {
-  //     ...doc.data()
-  //   } as MasterGame;
-  //   masterGamesList.push(MasterGame);
-  // });
+  lastVisible = querySnapshotSearch.docs[querySnapshotSearch.docs.length - 1];
 });
 
 // This is a helper function that requires a custom JSON array to be placed in masterGamesList using the MasterGame[] array
@@ -100,6 +102,27 @@ onMounted(async () => {
 // query from Firebase
 const masterGamesList: MasterGame[] = reactive([]);
 // query from Firebase
+
+async function pageNext() {
+  const q = query(
+    mainlistRef,
+    orderBy('Game'),
+    startAfter(lastVisible),
+    limit(15)
+  );
+  const querySnapshotSearch = await getDocs(q);
+
+  querySnapshotSearch.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    // console.log(doc.id, ' => ', doc.data());
+    const MasterGame = {
+      ...doc.data()
+    } as MasterGame;
+    masterGamesList.push(MasterGame);
+  });
+
+  lastVisible = querySnapshotSearch.docs[querySnapshotSearch.docs.length - 1];
+}
 
 async function addGameToCollection(game: Game) {
   // Need Check if game already exists in users collection by document id here, if it does, throw error
