@@ -15,8 +15,8 @@ const router = createRouter({
       component: ViewGamesList
     },
     {
-      path: '/master-collection',
-      name: 'master-collection',
+      path: '/main-collection',
+      name: 'main-collection',
       component: ViewGamesList
     }
   ]

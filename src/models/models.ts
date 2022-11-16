@@ -11,7 +11,7 @@ interface Game {
   completionStatus: string;
 }
 
-interface MasterGame {
+interface MainGame {
   Game: string;
   GameLink: string;
   Year: number;
@@ -24,4 +24,4 @@ interface MasterGame {
   Genre: string;
 }
 
-export type { UserInterface, Game, MasterGame };
+export type { UserInterface, Game, MainGame };

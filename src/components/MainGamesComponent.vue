@@ -1,6 +1,6 @@
 <template>
   <h2 class="my-5 text-center text-3xl text-orange-600 font-bold">
-    Master Games List
+    Main Games List
   </h2>
 
   <div class="flex items-center justify-center my-5">
@@ -39,33 +39,33 @@
             </thead>
             <tbody class="text-gray-600 text-sm font-light">
               <tr
-                v-for="MasterGame in masterGamesList"
-                :key="MasterGame.Game"
-                :MasterGame="MasterGame"
+                v-for="MainGame in mainGamesList"
+                :key="MainGame.Game"
+                :MainGame="MainGame"
                 class="border-b border-gray-200 hover:bg-gray-100"
               >
                 <td class="py-3 px-6 text-left whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="mr-2"></div>
-                    <span class="font-medium">{{ MasterGame.Game }}</span>
+                    <span class="font-medium">{{ MainGame.Game }}</span>
                   </div>
                 </td>
                 <td class="py-3 px-6 text-left">
                   <div class="flex items-center">
-                    <span>{{ MasterGame.Platform }}</span>
+                    <span>{{ MainGame.Platform }}</span>
                   </div>
                 </td>
 
                 <td class="py-3 px-6 text-center">
                   <div class="flex items-center justify-center">
-                    {{ MasterGame.Genre }}
+                    {{ MainGame.Genre }}
                   </div>
                 </td>
 
                 <td class="py-3 px-6 text-center">
                   <div class="flex item-center justify-center">
                     <PlusIcon
-                      @click="addGame(MasterGame)"
+                      @click="addGame(MainGame)"
                       class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
                     />
                     <EyeIcon
@@ -88,17 +88,17 @@
 import { ref } from 'vue';
 import { PlusIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
-import type { MasterGame } from '@/models/models';
+import type { MainGame } from '@/models/models';
 
 defineProps<{
-  masterGamesList: MasterGame[];
+  mainGamesList: MainGame[];
 }>();
 
 const searchQuery = ref('');
 
 const emit = defineEmits(['addGame', 'submitQuery']);
-function addGame(MasterGame: MasterGame) {
-  emit('addGame', MasterGame);
+function addGame(MainGame: MainGame) {
+  emit('addGame', MainGame);
 }
 
 function submitQuery(searchQuery: string) {
