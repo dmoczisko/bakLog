@@ -1,5 +1,25 @@
 <template>
-  <h2 class="my-5 text-center text-3xl text-red-600">Master Games List</h2>
+  <h2 class="my-5 text-center text-3xl text-orange-600 font-bold">
+    Master Games List
+  </h2>
+
+  <div class="flex items-center justify-center my-5">
+    <div class="flex border-2 border-slate-200 rounded">
+      <input
+        v-model="searchQuery"
+        type="text"
+        class="px-4 py-2 w-96 placeholder:text-slate-900"
+        placeholder="Search by Title"
+      />
+      <button
+        @click="submitQuery(searchQuery)"
+        class="px-4 text-white bg-orange-600 border-l hover:bg-orange-500"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+
   <div class="overflow-x-auto">
     <div
       class="flex items-center justify-center font-sans overflow-hidden px-16"
@@ -65,6 +85,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { PlusIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
 import type { MasterGame } from '@/models/models';
@@ -73,9 +94,15 @@ defineProps<{
   masterGamesList: MasterGame[];
 }>();
 
-const emit = defineEmits(['addGame']);
+const searchQuery = ref('');
+
+const emit = defineEmits(['addGame', 'submitQuery']);
 function addGame(MasterGame: MasterGame) {
   emit('addGame', MasterGame);
+}
+
+function submitQuery(searchQuery: string) {
+  emit('submitQuery', searchQuery);
 }
 </script>
 

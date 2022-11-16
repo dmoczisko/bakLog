@@ -1,6 +1,4 @@
 <template>
-  <!-- TAILWIND IMPORT -->
-
   <!--Hero-->
   <div
     class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center"
@@ -135,7 +133,7 @@
       </div>
     </div>
   </section>
-  <!-- Change the colour #f8fafc to match the previous section colour -->
+
   <img src="@/assets/svg/wave-top.svg" />
   <section class="container mx-auto text-center py-6 mb-12">
     <h2
@@ -163,8 +161,6 @@
       </button>
     </a>
   </section>
-
-  <!-- TAILWIND TEMPLATE IMPORT -->
 </template>
 
 <script setup lang="ts">

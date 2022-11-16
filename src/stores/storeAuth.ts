@@ -31,8 +31,6 @@ export const useStoreAuth = defineStore('storeAuth', {
     },
 
     async registerUser(auth: any) {
-      console.log('register user!');
-
       signInWithPopup(auth, provider)
         .then((result) => {
           // This gives you a Google Access Token. You can use it to access the Google API.
@@ -61,7 +59,7 @@ export const useStoreAuth = defineStore('storeAuth', {
     logoutUser() {
       signOut(auth)
         .then(() => {
-          console.log('user signed out');
+          // User signed out
         })
         .catch((error) => {
           console.log('Logout User Error: ', error.message);

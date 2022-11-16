@@ -10,11 +10,17 @@
   <MasterGames
     v-else-if="route.name === 'master-collection'"
     @add-game="addGameToCollection"
+    @submit-query="searchQuery"
     :masterGamesList="masterGamesList"
   />
 
   <div class="flex justify-center">
-    <button @click="pageNext()">Load More</button>
+    <button
+      class="my-5 bg-transparent hover:bg-orange-500 text-orange-700 font-semibold hover:text-white py-2 px-4 border border-orange-500 hover:border-transparent rounded"
+      @click="pageNext()"
+    >
+      Load More
+    </button>
   </div>
 </template>
 
@@ -80,7 +86,6 @@ onMounted(async () => {
     } as MasterGame;
     masterGamesList.push(MasterGame);
   });
-
   lastVisible = querySnapshotSearch.docs[querySnapshotSearch.docs.length - 1];
 });
 
@@ -103,6 +108,7 @@ onMounted(async () => {
 const masterGamesList: MasterGame[] = reactive([]);
 // query from Firebase
 
+// Load Next 15 games
 async function pageNext() {
   const q = query(
     mainlistRef,
@@ -168,6 +174,11 @@ async function updateProgressFromCollection(
   await updateDoc(doc(db, `users/${storeAuth.user.id}/games`, gameFbId), {
     completionStatus: gameCompletionStatus
   });
+}
+
+async function searchQuery(searchQuery: string) {
+  console.log('Search query is:', searchQuery);
+  // query firebase with text string and see what happens
 }
 </script>
 
