@@ -1,3 +1,5 @@
+import GamesListComponentVue from '@/components/GamesListComponent.vue';
+
 interface UserInterface {
   id: string;
   email: string;
@@ -23,5 +25,16 @@ interface MasterGame {
   PlatformLink: string;
   Genre: string;
 }
+
+interface GameImportModel {
+  Game: string;
+  game_title: string;
+  game_titleApi1: string;
+}
+
+// games.Add({
+//   Game: import.Game || import.game_title || import.game_titleAPi1,
+//   Field2: import.field2 || import.field_two ||
+// })
 
 export type { UserInterface, Game, MasterGame };
