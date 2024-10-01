@@ -1,5 +1,3 @@
-import GamesListComponentVue from '@/components/GamesListComponent.vue';
-
 interface UserInterface {
   id: string;
   email: string;
@@ -7,23 +5,12 @@ interface UserInterface {
 
 interface Game {
   gameFbId?: string;
-  Game: string;
-  Genre: string;
-  Platform: string;
-  completionStatus: string;
+  id: string;
+  name: string;
+  background_image: string;
+  genres: { name: string }[];
+  platforms: { platform: { name: string } }[];
+  completionStatus?: string;
 }
 
-interface MainGame {
-  Game: string;
-  GameLink: string;
-  Year: number;
-  Dev: string;
-  DevLink: string;
-  Publisher: string;
-  PublisherLink: string;
-  Platform: string;
-  PlatformLink: string;
-  Genre: string;
-}
-
-export type { UserInterface, Game, MainGame };
+export type { UserInterface, Game };

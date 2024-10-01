@@ -1,7 +1,7 @@
 <template>
-  <h2 class="my-5 text-center text-3xl text-orange-600 font-bold">
+  <div class="my-5 text-center text-3xl text-orange-600 font-bold">
     Main Games List
-  </h2>
+  </div>
 
   <div class="flex items-center justify-center my-5">
     <div class="flex border-2 border-slate-200 rounded">
@@ -10,72 +10,49 @@
         type="text"
         class="px-4 py-2 w-96 placeholder:text-slate-900"
         placeholder="Search by Title"
+        @keyup.enter="submitQuery(searchQuery)"
       />
       <button
         class="px-4 text-white bg-orange-600 border-l hover:bg-orange-500"
         @click="submitQuery(searchQuery)"
+        @keyup.enter="submitQuery(searchQuery)"
       >
         Search
       </button>
     </div>
   </div>
 
-  <div class="overflow-x-auto">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-16"
+  >
     <div
-      class="flex items-center justify-center font-sans overflow-hidden px-16"
+      v-for="game in searchResults"
+      :key="game.id"
+      class="bg-white shadow-md rounded overflow-hidden hover:shadow-lg transition-shadow duration-300"
     >
-      <div class="w-full">
-        <div class="bg-white shadow-md rounded">
-          <table class="min-w-max w-full table-auto">
-            <thead>
-              <tr
-                class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
-              >
-                <th class="py-3 px-6 text-left">Title</th>
-                <th class="py-3 px-6 text-left">Platform(s)</th>
-                <th class="py-3 px-6 text-center">Genre</th>
-                <th class="py-3 px-6 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody class="text-gray-600 text-sm font-light">
-              <tr
-                v-for="game in mainGamesList"
-                :key="game.Game"
-                :MainGame="game"
-                class="border-b border-gray-200 hover:bg-gray-100"
-              >
-                <td class="py-3 px-6 text-left whitespace-nowrap">
-                  <div class="flex items-center">
-                    <div class="mr-2"></div>
-                    <span class="font-medium">{{ game.Game }}</span>
-                  </div>
-                </td>
-                <td class="py-3 px-6 text-left">
-                  <div class="flex items-center">
-                    <span>{{ game.Platform }}</span>
-                  </div>
-                </td>
-
-                <td class="py-3 px-6 text-center">
-                  <div class="flex items-center justify-center">
-                    {{ game.Genre }}
-                  </div>
-                </td>
-
-                <td class="py-3 px-6 text-center">
-                  <div class="flex item-center justify-center">
-                    <PlusIcon
-                      class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
-                      @click="addGame(game)"
-                    />
-                    <EyeIcon
-                      class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
-                    />
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <img
+        :src="game.background_image"
+        alt="Game Image"
+        class="w-full h-48 object-cover"
+      />
+      <div class="p-4">
+        <h3 class="text-lg font-bold mb-2">{{ game.name }}</h3>
+        <p class="text-sm text-gray-600 mb-2">
+          <strong>Platforms:</strong>
+          {{ game.platforms.map((p) => p.platform.name).join(', ') }}
+        </p>
+        <p class="text-sm text-gray-600 mb-2">
+          <strong>Genres:</strong>
+          {{ game.genres.map((g) => g.name).join(', ') }}
+        </p>
+        <div class="flex justify-between items-center mt-4">
+          <PlusIcon
+            class="w-5 h-5 text-orange-600 hover:text-orange-500 cursor-pointer"
+            @click="addGameToFirestore(game)"
+          />
+          <EyeIcon
+            class="w-5 h-5 text-orange-600 hover:text-orange-500 cursor-pointer"
+          />
         </div>
       </div>
     </div>
@@ -86,21 +63,61 @@
 import { ref } from 'vue';
 import { PlusIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
-import type { MainGame } from '@/models/models';
+import type { Game } from '@/models/models';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '@/firebase';
+import { getAuth } from 'firebase/auth';
 
 defineProps<{
-  mainGamesList: MainGame[];
+  mainGamesList: Game[];
 }>();
 
 const searchQuery = ref('');
+const searchResults = ref<Game[]>([]);
 
 const emit = defineEmits(['addGame', 'submitQuery']);
-function addGame(game: MainGame) {
-  emit('addGame', game);
+
+async function submitQuery(query: string) {
+  emit('submitQuery', query);
+  const apiKey = import.meta.env.VITE_RAWG_API_KEY;
+  const response = await fetch(
+    `https://api.rawg.io/api/games?key=${apiKey}&search=${query}`
+  );
+  const data = await response.json();
+  console.log(data);
+  searchResults.value = data.results;
 }
 
-function submitQuery(searchQuery: string) {
-  emit('submitQuery', searchQuery);
+async function addGameToFirestore(game: Game) {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  if (!user) {
+    console.error('No user is logged in');
+    return;
+  }
+
+  const userId = user.uid;
+  const gameData: Game = {
+    // Ensure gameData conforms to the Game model
+    name: game.name,
+    id: game.id,
+    genres: game.genres.map((genre) => ({ name: genre.name })), // Ensure genres match the Game model
+    platforms: game.platforms.map((platform) => ({
+      platform: { name: platform.platform.name }
+    })),
+    background_image: game.background_image
+    // Add other game details as needed
+  };
+
+  console.log('Adding game to Firestore for user:', userId, gameData);
+
+  try {
+    await addDoc(collection(db, 'users', userId, 'games'), gameData);
+    alert(game.name + ' added to your collection!');
+  } catch (e) {
+    console.error('Error adding document: ', e);
+  }
 }
 </script>
 
