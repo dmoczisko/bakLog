@@ -1,3 +1,5 @@
+import GamesListComponentVue from '@/components/GamesListComponent.vue';
+
 interface UserInterface {
   id: string;
   email: string;
