@@ -13,4 +13,13 @@ interface Game {
   completionStatus?: string;
 }
 
-export type { UserInterface, Game };
+interface RawgApiPlatform {
+  platform?: { name: string };
+  name?: string;
+}
+
+interface RawgApiGenre {
+  name: string;
+}
+
+export type { UserInterface, Game, RawgApiPlatform, RawgApiGenre };

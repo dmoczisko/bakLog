@@ -63,7 +63,7 @@
 import { ref } from 'vue';
 import { PlusIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
-import type { Game } from '@/models/models';
+import type { Game, RawgApiPlatform, RawgApiGenre } from '@/models/models';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '@/firebase';
 import { getAuth } from 'firebase/auth';
@@ -88,6 +88,26 @@ async function submitQuery(query: string) {
   searchResults.value = data.results;
 }
 
+function normalizePlatform(platform: RawgApiPlatform): {
+  platform: { name: string };
+} {
+  if (platform.platform) {
+    return { platform: { name: platform.platform.name } };
+  } else if (platform.name) {
+    return { platform: { name: platform.name } };
+  } else {
+    throw new Error('Unknown platform format');
+  }
+}
+
+function normalizeGenre(genre: RawgApiGenre): { name: string } {
+  if (genre.name) {
+    return { name: genre.name };
+  } else {
+    throw new Error('Unknown genre format');
+  }
+}
+
 async function addGameToFirestore(game: Game) {
   const auth = getAuth();
   const user = auth.currentUser;
@@ -99,15 +119,11 @@ async function addGameToFirestore(game: Game) {
 
   const userId = user.uid;
   const gameData: Game = {
-    // Ensure gameData conforms to the Game model
     name: game.name,
     id: game.id,
-    genres: game.genres.map((genre) => ({ name: genre.name })), // Ensure genres match the Game model
-    platforms: game.platforms.map((platform) => ({
-      platform: { name: platform.platform.name }
-    })),
+    genres: game.genres.map(normalizeGenre),
+    platforms: game.platforms.map(normalizePlatform),
     background_image: game.background_image
-    // Add other game details as needed
   };
 
   console.log('Adding game to Firestore for user:', userId, gameData);

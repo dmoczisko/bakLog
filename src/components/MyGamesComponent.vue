@@ -35,13 +35,19 @@
                 </td>
                 <td class="py-3 px-6 text-left">
                   <div class="flex items-center">
-                    <span>{{ game.platforms.join(', ') }}</span>
+                    <span>
+                      {{
+                        game.platforms
+                          .map((platform) => platform.platform.name)
+                          .join(', ')
+                      }}</span
+                    >
                   </div>
                 </td>
 
                 <td class="py-3 px-6 text-center">
                   <div class="flex items-center justify-center">
-                    {{ game.genres.join(', ') }}
+                    {{ game.genres.map((genre) => genre.name).join(', ') }}
                   </div>
                 </td>
 
