@@ -12,8 +12,8 @@
         placeholder="Search by Title"
       />
       <button
-        @click="submitQuery(searchQuery)"
         class="px-4 text-white bg-orange-600 border-l hover:bg-orange-500"
+        @click="submitQuery(searchQuery)"
       >
         Search
       </button>
@@ -39,34 +39,34 @@
             </thead>
             <tbody class="text-gray-600 text-sm font-light">
               <tr
-                v-for="MainGame in mainGamesList"
-                :key="MainGame.Game"
-                :MainGame="MainGame"
+                v-for="game in mainGamesList"
+                :key="game.Game"
+                :MainGame="game"
                 class="border-b border-gray-200 hover:bg-gray-100"
               >
                 <td class="py-3 px-6 text-left whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="mr-2"></div>
-                    <span class="font-medium">{{ MainGame.Game }}</span>
+                    <span class="font-medium">{{ game.Game }}</span>
                   </div>
                 </td>
                 <td class="py-3 px-6 text-left">
                   <div class="flex items-center">
-                    <span>{{ MainGame.Platform }}</span>
+                    <span>{{ game.Platform }}</span>
                   </div>
                 </td>
 
                 <td class="py-3 px-6 text-center">
                   <div class="flex items-center justify-center">
-                    {{ MainGame.Genre }}
+                    {{ game.Genre }}
                   </div>
                 </td>
 
                 <td class="py-3 px-6 text-center">
                   <div class="flex item-center justify-center">
                     <PlusIcon
-                      @click="addGame(MainGame)"
                       class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
+                      @click="addGame(game)"
                     />
                     <EyeIcon
                       class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
@@ -80,8 +80,6 @@
       </div>
     </div>
   </div>
-
-  <!-- make v-for to call json -->
 </template>
 
 <script setup lang="ts">
@@ -97,8 +95,8 @@ defineProps<{
 const searchQuery = ref('');
 
 const emit = defineEmits(['addGame', 'submitQuery']);
-function addGame(MainGame: MainGame) {
-  emit('addGame', MainGame);
+function addGame(game: MainGame) {
+  emit('addGame', game);
 }
 
 function submitQuery(searchQuery: string) {

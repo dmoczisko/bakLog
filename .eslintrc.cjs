@@ -1,15 +1,24 @@
-/* eslint-env node */
-require('@rushstack/eslint-patch/modern-module-resolution');
-
 module.exports = {
-  root: true,
+  env: {
+    node: true,
+    es2020: true
+  },
   extends: [
-    'plugin:vue/vue3-essential',
     'eslint:recommended',
-    '@vue/eslint-config-typescript',
-    '@vue/eslint-config-prettier'
+    'plugin:vue/vue3-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'plugin:prettier/recommended'
   ],
+  plugins: ['vue', '@typescript-eslint', 'prettier'],
+  parser: 'vue-eslint-parser',
   parserOptions: {
-    ecmaVersion: 'latest'
+    parser: '@typescript-eslint/parser',
+    ecmaVersion: 2020,
+    sourceType: 'module'
+  },
+  rules: {
+    'prettier/prettier': 'error'
+    // other custom rules
   }
 };
