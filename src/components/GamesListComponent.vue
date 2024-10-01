@@ -1,5 +1,5 @@
 <template>
-  <!-- <button @click="addGameToMaster()">Add to master</button> -->
+  <!-- <button @click="addGameToMain()">Add to main</button> -->
 
   <MyGames
     v-if="route.name === 'my-games'"
@@ -7,14 +7,20 @@
     :myGamesList="myGamesList"
     @select-progress="updateProgressFromCollection"
   />
-  <MasterGames
-    v-else-if="route.name === 'master-collection'"
+  <MainGames
+    v-else-if="route.name === 'main-collection'"
     @add-game="addGameToCollection"
-    :masterGamesList="masterGamesList"
+    @submit-query="searchQuery"
+    :mainGamesList="mainGamesList"
   />
 
   <div class="flex justify-center">
-    <button @click="pageNext()">Load More</button>
+    <button
+      class="my-5 bg-transparent hover:bg-orange-500 text-orange-700 font-semibold hover:text-white py-2 px-4 border border-orange-500 hover:border-transparent rounded"
+      @click="pageNext()"
+    >
+      Load More
+    </button>
   </div>
 </template>
 
@@ -37,9 +43,9 @@ import {
 } from 'firebase/firestore';
 
 import type { Game } from '@/models/models';
-import type { MasterGame } from '@/models/models';
+import type { MainGame } from '@/models/models';
 import MyGames from '@/components/MyGamesComponent.vue';
-import MasterGames from '@/components/MasterGamesComponent.vue';
+import MainGames from '@/components/MainGamesComponent.vue';
 
 const route = useRoute();
 
@@ -61,7 +67,7 @@ onMounted(async () => {
     myGamesList.push(game);
   });
 
-  // Gets master collection from firebase
+  // Gets main collection from firebase
   //  Sample text query firebase example cannot do full text search
   const q = query(
     mainlistRef,
@@ -75,24 +81,23 @@ onMounted(async () => {
   querySnapshotSearch.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
     // console.log(doc.id, ' => ', doc.data());
-    const MasterGame = {
+    const MainGame = {
       ...doc.data()
-    } as MasterGame;
-    masterGamesList.push(MasterGame);
+    } as MainGame;
+    mainGamesList.push(MainGame);
   });
-
   lastVisible = querySnapshotSearch.docs[querySnapshotSearch.docs.length - 1];
 });
 
-// This is a helper function that requires a custom JSON array to be placed in masterGamesList using the MasterGame[] array
+// This is a helper function that requires a custom JSON array to be placed in mainGamesList using the MainGame[] array
 // A button needs to be added to trigger this manually, this is ONLY for importing data into firebase
 
-// <button @click="addGameToMaster()">Add to master</button>
+// <button @click="addGameToMain()">Add to main</button>
 
-// async function addGameToMaster() {
-//   masterGamesList.forEach(async (MasterGame) => {
+// async function addGameToMain() {
+//   mainGamesList.forEach(async (MainGame) => {
 //     try {
-//       await addDoc(collection(db, 'mainlist'), MasterGame);
+//       await addDoc(collection(db, 'mainlist'), MainGame);
 //     } catch (error) {
 //       console.log(error);
 //     }
@@ -100,9 +105,10 @@ onMounted(async () => {
 // }
 
 // query from Firebase
-const masterGamesList: MasterGame[] = reactive([]);
+const mainGamesList: MainGame[] = reactive([]);
 // query from Firebase
 
+// Load Next 15 games
 async function pageNext() {
   const q = query(
     mainlistRef,
@@ -115,10 +121,10 @@ async function pageNext() {
   querySnapshotSearch.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
     // console.log(doc.id, ' => ', doc.data());
-    const MasterGame = {
+    const MainGame = {
       ...doc.data()
-    } as MasterGame;
-    masterGamesList.push(MasterGame);
+    } as MainGame;
+    mainGamesList.push(MainGame);
   });
 
   lastVisible = querySnapshotSearch.docs[querySnapshotSearch.docs.length - 1];
@@ -168,6 +174,11 @@ async function updateProgressFromCollection(
   await updateDoc(doc(db, `users/${storeAuth.user.id}/games`, gameFbId), {
     completionStatus: gameCompletionStatus
   });
+}
+
+async function searchQuery(searchQuery: string) {
+  console.log('Search query is:', searchQuery);
+  // query firebase with text string and see what happens
 }
 </script>
 

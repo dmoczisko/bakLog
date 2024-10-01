@@ -13,7 +13,7 @@ interface Game {
   completionStatus: string;
 }
 
-interface MasterGame {
+interface MainGame {
   Game: string;
   GameLink: string;
   Year: number;
@@ -26,15 +26,4 @@ interface MasterGame {
   Genre: string;
 }
 
-interface GameImportModel {
-  Game: string;
-  game_title: string;
-  game_titleApi1: string;
-}
-
-// games.Add({
-//   Game: import.Game || import.game_title || import.game_titleAPi1,
-//   Field2: import.field2 || import.field_two ||
-// })
-
-export type { UserInterface, Game, MasterGame };
+export type { UserInterface, Game, MainGame };

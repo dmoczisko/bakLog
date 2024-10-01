@@ -1,5 +1,25 @@
 <template>
-  <h2 class="my-5 text-center text-3xl text-red-600">Master Games List</h2>
+  <h2 class="my-5 text-center text-3xl text-orange-600 font-bold">
+    Main Games List
+  </h2>
+
+  <div class="flex items-center justify-center my-5">
+    <div class="flex border-2 border-slate-200 rounded">
+      <input
+        v-model="searchQuery"
+        type="text"
+        class="px-4 py-2 w-96 placeholder:text-slate-900"
+        placeholder="Search by Title"
+      />
+      <button
+        class="px-4 text-white bg-orange-600 border-l hover:bg-orange-500"
+        @click="submitQuery(searchQuery)"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+
   <div class="overflow-x-auto">
     <div
       class="flex items-center justify-center font-sans overflow-hidden px-16"
@@ -19,34 +39,34 @@
             </thead>
             <tbody class="text-gray-600 text-sm font-light">
               <tr
-                v-for="MasterGame in masterGamesList"
-                :key="MasterGame.Game"
-                :MasterGame="MasterGame"
+                v-for="game in mainGamesList"
+                :key="game.Game"
+                :MainGame="game"
                 class="border-b border-gray-200 hover:bg-gray-100"
               >
                 <td class="py-3 px-6 text-left whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="mr-2"></div>
-                    <span class="font-medium">{{ MasterGame.Game }}</span>
+                    <span class="font-medium">{{ game.Game }}</span>
                   </div>
                 </td>
                 <td class="py-3 px-6 text-left">
                   <div class="flex items-center">
-                    <span>{{ MasterGame.Platform }}</span>
+                    <span>{{ game.Platform }}</span>
                   </div>
                 </td>
 
                 <td class="py-3 px-6 text-center">
                   <div class="flex items-center justify-center">
-                    {{ MasterGame.Genre }}
+                    {{ game.Genre }}
                   </div>
                 </td>
 
                 <td class="py-3 px-6 text-center">
                   <div class="flex item-center justify-center">
                     <PlusIcon
-                      @click="addGame(MasterGame)"
                       class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
+                      @click="addGame(game)"
                     />
                     <EyeIcon
                       class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
@@ -60,22 +80,27 @@
       </div>
     </div>
   </div>
-
-  <!-- make v-for to call json -->
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { PlusIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
-import type { MasterGame } from '@/models/models';
+import type { MainGame } from '@/models/models';
 
 defineProps<{
-  masterGamesList: MasterGame[];
+  mainGamesList: MainGame[];
 }>();
 
-const emit = defineEmits(['addGame']);
-function addGame(MasterGame: MasterGame) {
-  emit('addGame', MasterGame);
+const searchQuery = ref('');
+
+const emit = defineEmits(['addGame', 'submitQuery']);
+function addGame(game: MainGame) {
+  emit('addGame', game);
+}
+
+function submitQuery(searchQuery: string) {
+  emit('submitQuery', searchQuery);
 }
 </script>
 

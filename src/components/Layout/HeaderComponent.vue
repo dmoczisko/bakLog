@@ -5,7 +5,7 @@
     <nav class="flex align-center">
       <RouterLink to="/login">Baklog</RouterLink>
       <div v-if="storeAuth.user.id">
-        <RouterLink to="/master-collection" class="ml-5">
+        <RouterLink to="/main-collection" class="ml-5">
           Find a Game
         </RouterLink>
         <RouterLink to="/my-games" class="ml-5">My Collection</RouterLink>

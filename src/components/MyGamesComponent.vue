@@ -1,5 +1,7 @@
 <template>
-  <h2 class="my-5 text-center text-3xl text-red-600">My Collection</h2>
+  <h2 class="my-5 text-center text-3xl text-orange-600 font-bold">
+    My Collection
+  </h2>
   <div class="overflow-x-auto">
     <div
       class="flex items-center justify-center font-sans overflow-hidden px-16"
