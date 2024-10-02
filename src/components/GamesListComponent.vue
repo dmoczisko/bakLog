@@ -11,15 +11,6 @@
     @add-game="addGameToCollection"
     @submit-query="searchQuery"
   />
-
-  <div class="flex justify-center">
-    <button
-      class="my-5 bg-transparent hover:bg-orange-500 text-orange-700 font-semibold hover:text-white py-2 px-4 border border-orange-500 hover:border-transparent rounded"
-      @click="pageNext()"
-    >
-      Load More
-    </button>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -36,9 +27,7 @@ import {
   updateDoc,
   addDoc,
   deleteDoc,
-  limit,
-  startAfter,
-  QueryDocumentSnapshot
+  limit
 } from 'firebase/firestore';
 
 import type { Game } from '@/models/models';
@@ -51,7 +40,6 @@ const storeAuth = useStoreAuth();
 const myGamesList: Game[] = reactive([]);
 
 const mainlistRef = collection(db, 'mainlist');
-let lastVisible: QueryDocumentSnapshot | null = null;
 
 onMounted(async () => {
   // Gets user docs for user collection
@@ -86,35 +74,11 @@ onMounted(async () => {
     } as Game;
     mainGamesList.push(game);
   });
-  lastVisible = querySnapshotSearch.docs[querySnapshotSearch.docs.length - 1];
 });
 
 // query from Firebase
 const mainGamesList: Game[] = reactive([]);
 // query from Firebase
-
-// Load Next 15 games
-async function pageNext() {
-  const q = query(
-    mainlistRef,
-    orderBy('Game'),
-    startAfter(lastVisible),
-    limit(15)
-  );
-  const querySnapshotSearch = await getDocs(q);
-
-  querySnapshotSearch.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    // console.log(doc.id, ' => ', doc.data());
-    const game = {
-      gameFbId: doc.id,
-      ...doc.data()
-    } as Game;
-    mainGamesList.push(game);
-  });
-
-  lastVisible = querySnapshotSearch.docs[querySnapshotSearch.docs.length - 1];
-}
 
 async function addGameToCollection(game: Game) {
   // Need Check if game already exists in users collection by document id here, if it does, throw error

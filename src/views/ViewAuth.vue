@@ -15,9 +15,9 @@
         that backlog you've been working on!
       </p>
       <button
-        @click="googleLogin()"
         role="button"
         class="mx-auto lg:mx-0 hover:bg-slate-300 bg-slate-200 text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+        @click="googleLogin()"
       >
         Sign Up with Google
       </button>
@@ -121,9 +121,9 @@
           >
             <div class="flex items-center justify-center">
               <button
-                @click="googleLogin()"
                 role="button"
                 class="focus:ring-2 focus:ring-offset-2 focus:ring-orange-700 text-sm font-semibold text-white focus:outline-none bg-red-700 border rounded hover:bg-red-600 p-3 rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+                @click="googleLogin()"
               >
                 Sign Up with Google
               </button>
@@ -151,13 +151,11 @@
       know!
     </h3>
 
-    <a
-      href="mailto:danny.moczisko@gmail.com?subject = Backlog Feedback&body = Message"
-    >
+    <a target="_blank" href="https://github.com/dmoczisko/bakLog/issues">
       <button
         class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
       >
-        Email me
+        Baklog Repository
       </button>
     </a>
   </section>
@@ -175,4 +173,8 @@ function googleLogin() {
 }
 </script>
 
-<style></style>
+<style scoped>
+button {
+  z-index: 9999;
+}
+</style>

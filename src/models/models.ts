@@ -3,23 +3,24 @@ interface UserInterface {
   email: string;
 }
 
+interface Genres {
+  name: string;
+}
+
+interface Platforms {
+  platform: {
+    name: string;
+  };
+}
+
 interface Game {
+  background_image: string;
+  completionStatus?: string;
   gameFbId?: string;
   id: string;
   name: string;
-  background_image: string;
-  genres: { name: string }[];
-  platforms: { platform: { name: string } }[];
-  completionStatus?: string;
+  genres: Genres[];
+  platforms: Platforms[];
 }
 
-interface RawgApiPlatform {
-  platform?: { name: string };
-  name?: string;
-}
-
-interface RawgApiGenre {
-  name: string;
-}
-
-export type { UserInterface, Game, RawgApiPlatform, RawgApiGenre };
+export type { UserInterface, Genres, Platforms, Game };

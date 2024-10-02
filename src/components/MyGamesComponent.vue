@@ -35,19 +35,15 @@
                 </td>
                 <td class="py-3 px-6 text-left">
                   <div class="flex items-center">
-                    <span>
-                      {{
-                        game.platforms
-                          .map((platform) => platform.platform.name)
-                          .join(', ')
-                      }}</span
-                    >
+                    <span>{{
+                      game.platforms.map((p) => p.platform.name).join(', ')
+                    }}</span>
                   </div>
                 </td>
 
                 <td class="py-3 px-6 text-center">
                   <div class="flex items-center justify-center">
-                    {{ game.genres.map((genre) => genre.name).join(', ') }}
+                    {{ game.genres.map((g) => g.name).join(', ') }}
                   </div>
                 </td>
 
@@ -91,19 +87,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineProps, defineEmits } from 'vue';
-import { onBeforeRouteUpdate } from 'vue-router';
+import { ref, defineProps, defineEmits } from 'vue';
 import { TrashIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
-import { collection, getDocs } from 'firebase/firestore';
 import type { Game } from '@/models/models';
-import { db } from '@/firebase';
 
-const props = defineProps<{
+defineProps<{
   myGamesList: Game[];
 }>();
-
-const localGamesList = ref<Game[]>([...props.myGamesList]);
 
 const ProgressOptions = ref([
   { value: 'Pending' },
@@ -115,25 +106,6 @@ const emit = defineEmits(['deleteGame', 'selectProgress']);
 function deleteGame(gameFbId: string | undefined) {
   emit('deleteGame', gameFbId);
 }
-
-async function fetchGames(userId: string) {
-  const querySnapshot = await getDocs(collection(db, 'users', userId, 'games'));
-  localGamesList.value = querySnapshot.docs.map((doc) => ({
-    gameFbId: doc.id,
-    ...doc.data()
-  })) as Game[];
-}
-
-onMounted(() => {
-  const userId = 'your-user-id'; // Replace with actual user ID fetching logic
-  fetchGames(userId);
-});
-
-onBeforeRouteUpdate((to, from, next) => {
-  const userId = 'your-user-id'; // Replace with actual user ID fetching logic
-  fetchGames(userId);
-  next();
-});
 
 function selectProgress(
   gameFbId: string | undefined,
