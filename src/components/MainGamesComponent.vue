@@ -74,7 +74,7 @@
 import { onMounted, ref, computed } from 'vue';
 import { PlusIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
-import type { Game } from '@/models/models';
+import type { Game } from '../models/models';
 
 defineProps<{
   mainGamesList: Game[];
