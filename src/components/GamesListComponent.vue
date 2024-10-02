@@ -1,27 +1,16 @@
 <template>
-  <!-- <button @click="addGameToMain()">Add to main</button> -->
-
   <MyGames
     v-if="route.name === 'my-games'"
+    :my-games-list="myGamesList"
     @delete-game="deleteGameFromCollection"
-    :myGamesList="myGamesList"
     @select-progress="updateProgressFromCollection"
   />
   <MainGames
     v-else-if="route.name === 'main-collection'"
+    :main-games-list="mainGamesList"
     @add-game="addGameToCollection"
     @submit-query="searchQuery"
-    :mainGamesList="mainGamesList"
   />
-
-  <div class="flex justify-center">
-    <button
-      class="my-5 bg-transparent hover:bg-orange-500 text-orange-700 font-semibold hover:text-white py-2 px-4 border border-orange-500 hover:border-transparent rounded"
-      @click="pageNext()"
-    >
-      Load More
-    </button>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -38,12 +27,10 @@ import {
   updateDoc,
   addDoc,
   deleteDoc,
-  limit,
-  startAfter
+  limit
 } from 'firebase/firestore';
 
 import type { Game } from '@/models/models';
-import type { MainGame } from '@/models/models';
 import MyGames from '@/components/MyGamesComponent.vue';
 import MainGames from '@/components/MainGamesComponent.vue';
 
@@ -53,7 +40,6 @@ const storeAuth = useStoreAuth();
 const myGamesList: Game[] = reactive([]);
 
 const mainlistRef = collection(db, 'mainlist');
-let lastVisible: any = null;
 
 onMounted(async () => {
   // Gets user docs for user collection
@@ -62,6 +48,7 @@ onMounted(async () => {
   );
   querySnapshot.forEach((doc) => {
     const game = {
+      gameFbId: doc.id,
       ...doc.data()
     } as Game;
     myGamesList.push(game);
@@ -81,54 +68,17 @@ onMounted(async () => {
   querySnapshotSearch.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
     // console.log(doc.id, ' => ', doc.data());
-    const MainGame = {
+    const game = {
+      gameFbId: doc.id,
       ...doc.data()
-    } as MainGame;
-    mainGamesList.push(MainGame);
+    } as Game;
+    mainGamesList.push(game);
   });
-  lastVisible = querySnapshotSearch.docs[querySnapshotSearch.docs.length - 1];
 });
 
-// This is a helper function that requires a custom JSON array to be placed in mainGamesList using the MainGame[] array
-// A button needs to be added to trigger this manually, this is ONLY for importing data into firebase
-
-// <button @click="addGameToMain()">Add to main</button>
-
-// async function addGameToMain() {
-//   mainGamesList.forEach(async (MainGame) => {
-//     try {
-//       await addDoc(collection(db, 'mainlist'), MainGame);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   });
-// }
-
 // query from Firebase
-const mainGamesList: MainGame[] = reactive([]);
+const mainGamesList: Game[] = reactive([]);
 // query from Firebase
-
-// Load Next 15 games
-async function pageNext() {
-  const q = query(
-    mainlistRef,
-    orderBy('Game'),
-    startAfter(lastVisible),
-    limit(15)
-  );
-  const querySnapshotSearch = await getDocs(q);
-
-  querySnapshotSearch.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    // console.log(doc.id, ' => ', doc.data());
-    const MainGame = {
-      ...doc.data()
-    } as MainGame;
-    mainGamesList.push(MainGame);
-  });
-
-  lastVisible = querySnapshotSearch.docs[querySnapshotSearch.docs.length - 1];
-}
 
 async function addGameToCollection(game: Game) {
   // Need Check if game already exists in users collection by document id here, if it does, throw error
@@ -146,7 +96,7 @@ async function addGameToCollection(game: Game) {
       gameFbId: docRef.id
     });
     myGamesList.push(game);
-    alert(game.Game + 'has been added to your collection');
+    alert(game.name + ' has been added to your collection');
   } catch (error) {
     console.log(error);
   }

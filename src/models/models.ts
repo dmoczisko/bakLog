@@ -1,29 +1,26 @@
-import GamesListComponentVue from '@/components/GamesListComponent.vue';
-
 interface UserInterface {
   id: string;
   email: string;
 }
 
+interface Genres {
+  name: string;
+}
+
+interface Platforms {
+  platform: {
+    name: string;
+  };
+}
+
 interface Game {
+  background_image: string;
+  completionStatus?: string;
   gameFbId?: string;
-  Game: string;
-  Genre: string;
-  Platform: string;
-  completionStatus: string;
+  id: string;
+  name: string;
+  genres: Genres[];
+  platforms: Platforms[];
 }
 
-interface MainGame {
-  Game: string;
-  GameLink: string;
-  Year: number;
-  Dev: string;
-  DevLink: string;
-  Publisher: string;
-  PublisherLink: string;
-  Platform: string;
-  PlatformLink: string;
-  Genre: string;
-}
-
-export type { UserInterface, Game, MainGame };
+export type { UserInterface, Genres, Platforms, Game };

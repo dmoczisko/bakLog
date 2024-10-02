@@ -30,34 +30,36 @@
                 <td class="py-3 px-6 text-left whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="mr-2"></div>
-                    <span class="font-medium">{{ game.Game }}</span>
+                    <span class="font-medium">{{ game.name }}</span>
                   </div>
                 </td>
                 <td class="py-3 px-6 text-left">
                   <div class="flex items-center">
-                    <span>{{ game.Platform }}</span>
+                    <span>{{
+                      game.platforms.map((p) => p.platform.name).join(', ')
+                    }}</span>
                   </div>
                 </td>
 
                 <td class="py-3 px-6 text-center">
                   <div class="flex items-center justify-center">
-                    {{ game.Genre }}
+                    {{ game.genres.map((g) => g.name).join(', ') }}
                   </div>
                 </td>
 
                 <td class="py-3 px-6 text-center">
                   <select
-                    @change="
-                      selectProgress(game.gameFbId, game.completionStatus)
-                    "
                     v-model="game.completionStatus"
                     :class="game.completionStatus"
                     class="py-1 px-3 rounded-full text-xs"
+                    @change="
+                      selectProgress(game.gameFbId, game.completionStatus)
+                    "
                   >
                     <option
                       v-for="progressOption in ProgressOptions"
-                      :value="progressOption.value"
                       :key="progressOption.value"
+                      :value="progressOption.value"
                     >
                       {{ progressOption.value }}
                     </option>
@@ -70,8 +72,8 @@
                       class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
                     />
                     <TrashIcon
-                      @click="deleteGame(game.gameFbId)"
                       class="w-5 mr-2 transform hover:text-purple-500 hover:scale-110 cursorPointer"
+                      @click="deleteGame(game.gameFbId)"
                     />
                   </div>
                 </td>
@@ -85,28 +87,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, defineProps, defineEmits } from 'vue';
 import { TrashIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
 import type { Game } from '@/models/models';
 
-// Do I need to emit on change event here for array to update based on value?
+defineProps<{
+  myGamesList: Game[];
+}>();
+
 const ProgressOptions = ref([
   { value: 'Pending' },
   { value: 'Active' },
   { value: 'Completed' }
 ]);
 
-defineProps<{
-  myGamesList: Game[];
-}>();
-
 const emit = defineEmits(['deleteGame', 'selectProgress']);
-function deleteGame(gameFbId: any) {
+function deleteGame(gameFbId: string | undefined) {
   emit('deleteGame', gameFbId);
 }
 
-function selectProgress(gameFbId: any, gameCompletionStatus: string) {
+function selectProgress(
+  gameFbId: string | undefined,
+  gameCompletionStatus: string | undefined
+) {
   emit('selectProgress', gameFbId, gameCompletionStatus);
 }
 </script>
