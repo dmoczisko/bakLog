@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref } from 'vue';
 import { TrashIcon } from '@heroicons/vue/24/solid';
 import { EyeIcon } from '@heroicons/vue/24/solid';
 import type { Game } from '@/models/models';
